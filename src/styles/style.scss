@@ -1,6 +1,7 @@
 @use "./base/fonts";
 @use "./abstract/mixins" as m;
 @use "./pages/index";
+@use "./pages/settings";
 @use "./components/main";
 
 * {
@@ -16,6 +17,7 @@ body {
     font-weight: 400;
     line-height: 1;
     width: 100%;
-    color: #ffffff;
+    color: #000000;
     margin: 0;
+    cursor: default;
 }

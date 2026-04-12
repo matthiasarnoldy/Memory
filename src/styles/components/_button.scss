@@ -6,13 +6,13 @@
     font-weight: 700;
     text-decoration: none;
     @include m.flex;
-    transition: all 100ms;
+    transition: all 200ms;
 
     &__icon {
-        transition: transform 100ms ease;
+        transition: transform 200ms ease;
 
         &-stroke {
-            transition: stroke-width 100ms ease;
+            transition: stroke-width 200ms ease;
         }
     }
 
@@ -23,7 +23,7 @@
         color: v.$primary;
         gap: 20px;
 
-        &:hover {
+        &:not(.is-disabled):hover {
             transform: scaleX(1.04);
 
             .button__icon--turn {
@@ -64,4 +64,27 @@
         //     }
         // }
     }
+
+    &--small {
+        font-size: 20px;
+        padding: 14px 20px;
+        background-color: v.$secondary;
+        color: v.$primary;
+        gap: 8px;
+
+        &:hover {
+            font-size: 22px;
+            transform: scale(1.1);
+
+            .button__icon {
+                transform: rotate(-6deg) scale(1.25);
+            }
+        }
+    }
+}
+
+.button.is-disabled {
+    background-color: #DBDBD6;
+    cursor: default;
+    pointer-events: none;
 }

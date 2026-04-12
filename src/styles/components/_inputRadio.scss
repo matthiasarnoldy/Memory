@@ -1,0 +1,46 @@
+@use "../abstract/mixins" as m;
+
+label {
+    @include m.flex($justify: flex-start, $align: center, $gap: 10px);
+    cursor: pointer;
+
+    .settings__choosing {
+        @include m.flex($justify: flex-start, $align: center, $gap: 24px);
+
+        >img {
+            opacity: 0;
+            transition: opacity 100ms ease-in-out;
+        }
+    }
+}
+
+label:has(input[type="radio"]:checked) {
+    font-weight: 700;
+
+    .settings__choosing {
+        >img {
+            opacity: 1;
+        }
+    }
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+    background: url("/assets/icons/buttonDisabled.svg") center / contain no-repeat;
+}
+
+input[type="radio"]:checked {
+    background-image: url("/assets/icons/buttonChecked.svg");
+}
+
+input[type="radio"]:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 50%;
+}

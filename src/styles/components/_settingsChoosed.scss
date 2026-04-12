@@ -1,0 +1,7 @@
+@use "../abstract/mixins" as m;
+
+.settings__choosed {
+    padding: 14px 20px;
+    background-color: #f6f6f6;
+    @include m.flex($gap: 16px);
+}
