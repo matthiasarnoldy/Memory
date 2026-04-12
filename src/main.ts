@@ -21,6 +21,11 @@ const themeImageMap: Record<string, string> = {
     FoodsTheme: '../public/assets/img/foods.png',
 };
 
+const dividerIconPaths = {
+    default: '../public/assets/icons/dividingLine.svg',
+    active: '../public/assets/icons/decorLineRotated.svg',
+};
+
 function init() {
     if (document.body.classList.contains('settings')) initSettingsPage();
     if (document.body.classList.contains('game')) initGamePage();
@@ -86,11 +91,20 @@ function updatePlayButtonState(playButton: HTMLAnchorElement) {
 function playButtonActions(playButton: HTMLAnchorElement, isComplete: boolean) {
     playButton.classList.toggle('is-disabled', !isComplete);
     playButton.setAttribute('aria-disabled', String(!isComplete));
+    updateSelectedDividerIcons(isComplete);
     if (isComplete) {
         playButton.removeAttribute('tabindex');
         return;
     }
     playButton.setAttribute('tabindex', '-1');
+}
+
+function updateSelectedDividerIcons(isComplete: boolean) {
+    const dividerIcons = document.querySelectorAll<HTMLImageElement>('.settings__choosed--wrapper img');
+    const activeIconPath = isComplete ? dividerIconPaths.active : dividerIconPaths.default;
+    dividerIcons.forEach((icon) => {
+        icon.src = activeIconPath;
+    });
 }
 
 function saveSettings(values: CompleteSettingsValues) {
