@@ -22,6 +22,14 @@ const themeImageMap: Record<string, string> = {
 };
 
 function init() {
+    if (document.body.classList.contains('settings')) initSettingsPage();
+    if (document.body.classList.contains('game')) initGamePage();
+}
+
+function initGamePage() {
+}
+
+function initSettingsPage() {
     initPlayButton();
     initPreviewImage();
     initSelectedSummary();
@@ -86,9 +94,7 @@ function playButtonActions(playButton: HTMLAnchorElement, isComplete: boolean) {
 }
 
 function saveSettings(values: CompleteSettingsValues) {
-    localStorage.setItem('memory.theme', values.theme);
-    localStorage.setItem('memory.player', values.player);
-    localStorage.setItem('memory.boardSize', values.boardSize);
+    localStorage.setItem('memory.settings', JSON.stringify(values));
 }
 
 function updateThemePreviewImage(themePreviewImage: HTMLImageElement | null) {
