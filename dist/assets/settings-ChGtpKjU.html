@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
+
+    <link rel="prefetch" href="/pages/game.html">
 </head>
 
 <body class="settings">
@@ -112,12 +114,16 @@
         <section class="options__choosed">
             <img src="../public/assets/img/codeVibes.png" alt="">
             <div class="settings__choosed">
-                <span>Game theme</span>
-                <img src="../public/assets/icons/dividingLine.svg" alt="">
-                <span>Player</span>
-                <img src="../public/assets/icons/dividingLine.svg" alt="">
-                <span>Board size</span>
-                <a href="./pages/game.html" class="button button--small">
+                <div class="settings__choosed--wrapper">
+                    <span class="settings__selected-theme">Game theme</span>
+                    <img src="../public/assets/icons/dividingLine.svg" alt="">
+                </div>
+                <div class="settings__choosed--wrapper">
+                    <span class="settings__selected-player">Player</span>
+                    <img src="../public/assets/icons/dividingLine.svg" alt="">
+                </div>
+                <span class="settings__selected-board-size">Board size</span>
+                <a href="./game.html" class="button button--small is-disabled">
                     <img class="button__icon" src="../public/assets/icons/play.svg" alt="">
                     <span data-label="Play">Play</span>
                 </a>
