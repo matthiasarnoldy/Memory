@@ -1,0 +1,30 @@
+@use "../abstract/mixins" as m;
+
+.start {
+    position: relative;
+    height: 100vh;
+    background-color: #303131;
+    @include m.flex($direction: column);
+    gap: 84px;
+}
+
+.introduction {
+    @include m.flex($align: flex-start, $direction: column-reverse);
+
+    &__headline {
+        font-family: "Red Rose";
+        font-size: clamp(40px, 8.9vw + 11.42px, 140px);
+        font-weight: 700;
+    }
+
+    &__subheadline {
+        font-size: clamp(28px, 1.07vw + 24.57px, 40px);
+    }
+}
+
+.background__icon {
+    position: absolute;
+    left: 0px;
+    bottom: 20px;
+    height: clamp(250px, 14.28vw + 204.28px, 410px);
+}

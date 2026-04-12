@@ -1,0 +1,67 @@
+@use "../abstract/mixins" as m;
+@use "../abstract/variables" as v;
+
+.button {
+    font-size: "Red Rose";
+    font-weight: 700;
+    text-decoration: none;
+    @include m.flex;
+    transition: all 100ms;
+
+    &__icon {
+        transition: transform 100ms ease;
+
+        &-stroke {
+            transition: stroke-width 100ms ease;
+        }
+    }
+
+    &--primary {
+        font-size: 40px;
+        padding: 24px;
+        background-color: v.$secondary;
+        color: v.$primary;
+        gap: 20px;
+
+        &:hover {
+            transform: scaleX(1.04);
+
+            .button__icon--turn {
+                transform: rotate(-25.77deg) scale(1.125);
+            }
+
+            .button__icon--scale {
+                transform: scale(1, 1.3);
+            }
+
+            .button__icon--scale .button__icon-stroke {
+                stroke-width: 3;
+            }
+        }
+    }
+
+    &--secondary {
+        font-size: 24px;
+        padding: 16px 24px;
+        background-color: v.$primary;
+        color: #ffffff;
+        gap: 10px;
+        border: 1px solid v.$secondary;
+
+        // &:hover {
+        //     transform: scaleX(1.04);
+
+        //     .button__icon--turn {
+        //         transform: rotate(-25.77deg) scale(1.125);
+        //     }
+
+        //     .button__icon--scale {
+        //         transform: scale(1, 1.3);
+        //     }
+
+        //     .button__icon--scale .button__icon-stroke {
+        //         stroke-width: 3;
+        //     }
+        // }
+    }
+}
