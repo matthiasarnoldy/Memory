@@ -1,7 +1,7 @@
 @use "../abstract/mixins" as m;
 
 .settings {
-    padding: 114px 170px;
+    padding: clamp(16px, 8.75vw + -12px, 114px) clamp(16px, 13.75vw + -28px, 170px);
     @include m.flex($justify: flex-start, $align: flex-start, $direction: column, $gap: 48px)
 }
 
@@ -12,11 +12,19 @@ header {
         font-family: "Red Rose";
         font-size: 54px;
         font-weight: 700;
+
+        @include m.breakpoint(600px) {
+            padding-left: 24px;
+        }
     }
 
     .headline__decorLine {
         margin-top: -4px;
         margin-left: -24px;
+
+        @include m.breakpoint(600px) {
+            margin-left: 0;
+        }
     }
 }
 
@@ -24,11 +32,23 @@ main {
     width: 100%;
     @include m.flex($justify: space-between, $align: auto);
 
+    @include m.breakpoint(1080px) {
+        @include m.flex($justify: center, $align: auto, $direction: column, $gap: 48px);
+    }
+
     .options {
         @include m.flex($align: flex-start, $direction: column, $gap: 54px);
     }
 
     .options__choosed {
         @include m.flex($justify: space-between, $align: flex-end, $direction: column);
+
+        @include m.breakpoint(1080px) {
+            @include m.flex($justify: space-between, $align: center, $direction: column, $gap: 48px);
+        }
+
+        >img {
+            height: clamp(240px, 15.35vw + 190.85px, 412px);
+        }
     }
 }

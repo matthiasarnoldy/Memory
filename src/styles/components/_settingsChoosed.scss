@@ -4,4 +4,18 @@
     padding: 14px 20px;
     background-color: #f6f6f6;
     @include m.flex($gap: 16px);
+
+    @include m.breakpoint(768px) {
+        @include m.flex($justify: center, $align: center, $direction: column, $gap: 16px);
+    }
+
+    &--wrapper {
+        @include m.flex($gap: 16px);
+
+        > img {
+            @include m.breakpoint(768px) {
+                display: none;
+            }
+        }
+    }
 }

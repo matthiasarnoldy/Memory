@@ -72,6 +72,16 @@
         color: v.$primary;
         gap: 8px;
 
+        span::after {
+            content: attr(data-label);
+            font-size: 22px;
+            display: block;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
         &:hover {
             font-size: 22px;
             transform: scale(1.1);
