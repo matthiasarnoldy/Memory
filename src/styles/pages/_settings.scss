@@ -5,7 +5,7 @@
     @include m.flex($justify: flex-start, $align: flex-start, $direction: column, $gap: 48px)
 }
 
-header {
+.settings__header {
     @include m.flex($align: flex-start, $direction: column);
 
     .headline {
@@ -28,7 +28,7 @@ header {
     }
 }
 
-main {
+.settings__main {
     width: 100%;
     @include m.flex($justify: space-between, $align: auto);
 

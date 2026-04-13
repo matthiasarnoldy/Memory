@@ -1,0 +1,28 @@
+@use "../abstract/mixins" as m;
+
+.game {
+    padding: 40px 110px;
+    @include m.flex($justify: flex-start, $direction: column, $gap: 54px);
+}
+
+.game__header {
+    width: 100%;
+    padding: 24px;
+    background-color: gray;
+    @include m.flex($justify: space-between);
+
+    .game__score {
+        padding: 16px;
+        background-color: #ffffff;
+        @include m.flex($justify: space-between, $gap: 40px);
+        border-radius: 10px;
+
+        .score__player {
+            @include m.flex($justify: space-between, $gap: 8px);
+        }
+    }
+}
+
+// .game__main {
+
+// }

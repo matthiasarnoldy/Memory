@@ -2,7 +2,7 @@
 @use "../abstract/variables" as v;
 
 .button {
-    font-size: "Red Rose";
+    font-family: "Red Rose";
     font-weight: 700;
     text-decoration: none;
     @include m.flex;
