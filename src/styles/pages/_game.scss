@@ -19,10 +19,35 @@
 
         .score__player {
             @include m.flex($justify: space-between, $gap: 8px);
+
+            &--number {
+                font-size: 30px;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .current__player {
+        @include m.flex($justify: space-between, $gap: 18px);
+
+        &--text {
+            font-size: 32px;
+            font-weight: 700;
         }
     }
 }
 
-// .game__main {
+.game__main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(var(--game-grid-cols, 4), minmax(0, 1fr));
+    gap: 16px;
+}
 
-// }
+.game__card {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 0;
+    background-color: gray;
+    cursor: pointer;
+}

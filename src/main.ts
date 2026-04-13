@@ -14,6 +14,11 @@ type CompleteSettingsValues = {
     boardSize: string;
 };
 
+type GridSize = {
+    rows: number;
+    cols: number;
+};
+
 const themeImageMap: Record<string, string> = {
     CodeVibesTheme: '../public/assets/img/codeVibes.png',
     GamingTheme: '../public/assets/img/gaming.png',
@@ -26,12 +31,21 @@ const dividerIconPaths = {
     active: '../public/assets/icons/decorLineRotated.svg',
 };
 
+const boardSizeGridMap: Record<string, GridSize> = {
+    '16': { rows: 4, cols: 4 },
+    '24': { rows: 4, cols: 6 },
+    '36': { rows: 6, cols: 6 },
+};
+
 function init() {
     if (document.body.classList.contains('settings')) initSettingsPage();
     if (document.body.classList.contains('game')) initGamePage();
 }
 
 function initGamePage() {
+    const savedSettings = getSavedSettings();
+    if (!savedSettings) return;
+    renderGameBoard(savedSettings.boardSize);
 }
 
 function initSettingsPage() {
@@ -149,4 +163,41 @@ function getCheckedValue(): SettingsValues {
         player: checkedPlayer ? checkedPlayer.value : null,
         boardSize: checkedBoardSize ? checkedBoardSize.value : null,
     };
+}
+
+function getSavedSettings(): CompleteSettingsValues | null {
+    const savedSettingsRaw = localStorage.getItem('memory.settings');
+    if (!savedSettingsRaw) return null;
+    try {
+        const parsedSettings = JSON.parse(savedSettingsRaw) as Partial<CompleteSettingsValues>;
+        if (!parsedSettings.theme || !parsedSettings.player || !parsedSettings.boardSize) return null;
+        return {
+            theme: parsedSettings.theme,
+            player: parsedSettings.player,
+            boardSize: parsedSettings.boardSize,
+        };
+    } catch {
+        return null;
+    }
+}
+
+function renderGameBoard(boardSize: string) {
+    const gameBoard = document.querySelector<HTMLElement>('.game__main');
+    if (!gameBoard) return;
+    const gridSize = boardSizeGridMap[boardSize];
+    if (!gridSize) return;
+    const fieldCount = gridSize.rows * gridSize.cols;
+    gameBoard.innerHTML = '';
+    gameBoard.style.setProperty('--game-grid-cols', String(gridSize.cols));
+    for (let cardIndex = 0; cardIndex < fieldCount; cardIndex++) {
+        appendGameCardField(gameBoard, cardIndex);
+    }
+}
+
+function appendGameCardField(gameBoard: HTMLElement, cardIndex: number) {
+    const cardField = document.createElement('button');
+    cardField.className = 'game__card';
+    cardField.type = 'button';
+    cardField.setAttribute('aria-label', `Card ${cardIndex + 1}`);
+    gameBoard.appendChild(cardField);
 }
