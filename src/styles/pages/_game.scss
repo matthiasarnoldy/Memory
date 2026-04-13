@@ -38,16 +38,52 @@
 }
 
 .game__main {
-    width: 100%;
     display: grid;
     grid-template-columns: repeat(var(--game-grid-cols, 4), minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--game-grid-gap, 16px);
 }
 
 .game__card {
     width: 100%;
     aspect-ratio: 1 / 1;
     border: 0;
-    background-color: gray;
+    background: transparent;
     cursor: pointer;
+    perspective: 800px;
+    padding: 0;
+}
+
+.game__card-inner {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 280ms ease;
+}
+
+.game__card.is-flipped .game__card-inner {
+    transform: rotateY(180deg);
+}
+
+.game__card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    @include m.flex;
+}
+
+.game__card-face--front {
+    background-color: gray;
+}
+
+.game__card-face--back {
+    background-color: #ffffff;
+    transform: rotateY(180deg);
+
+    img {
+        object-fit: contain;
+        user-select: none;
+        pointer-events: none;
+    }
 }

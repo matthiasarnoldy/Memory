@@ -1,0 +1,146 @@
+@use "../abstract/variables" as v;
+
+html:has(body.theme--codevibes),
+body.theme--codevibes,
+body.theme--codevibes * {
+    scrollbar-color: #4dd5bc transparent;
+}
+
+html:has(body.theme--codevibes)::-webkit-scrollbar,
+body.theme--codevibes::-webkit-scrollbar,
+body.theme--codevibes *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+html:has(body.theme--codevibes)::-webkit-scrollbar-track,
+body.theme--codevibes::-webkit-scrollbar-track,
+body.theme--codevibes *::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html:has(body.theme--codevibes)::-webkit-scrollbar-thumb,
+body.theme--codevibes::-webkit-scrollbar-thumb,
+body.theme--codevibes *::-webkit-scrollbar-thumb {
+    background-color: #4dd5bc;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.theme--codevibes {
+    background-color: v.$primary;
+
+    .game__header {
+        background-color: v.$primary;
+    }
+
+    .game__score {
+        gap: 20px;
+    }
+
+    .score__player {
+        svg {
+            display: none;
+        }
+
+        align-items: center;
+
+        &::before {
+            content: "";
+            width: 24px;
+            height: 20px;
+            display: block;
+            background: center / contain no-repeat;
+            flex-shrink: 0;
+        }
+
+        &:first-child::before {
+            background-image: url("/assets/icons/arrowBlue.png");
+        }
+
+        &:last-child::before {
+            background-image: url("/assets/icons/arrowOrange.png");
+        }
+
+        .score__player--number {
+            font-size: 24px;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            &::after {
+                font-family: "Red Rose";
+            }
+        }
+
+        &:first-child .score__player--number::before {
+            content: "Blue";
+        }
+
+        &:last-child .score__player--number::before {
+            content: "Orange";
+        }
+    }
+
+    .game__score {
+        background-color: #425652;
+        color: v.$primary;
+    }
+
+    .score__player:first-child {
+        color: #097fc5;
+    }
+
+    .score__player:last-child {
+        color: #ea6900;
+    }
+
+    .current__player {
+        svg {
+            display: none;
+        }
+
+        &::after {
+            content: "";
+            width: 29px;
+            height: 24px;
+            display: block;
+            background: url("/assets/icons/arrowBlue.png") center / contain no-repeat;
+            flex-shrink: 0;
+        }
+
+        &--text {
+            font-family: "Red Rose";
+            font-size: 26px;
+            font-weight: 400;
+            color: #ffffff;
+        }
+    }
+
+    .button--secondary {
+        background-color: #86E9D633;
+        border: 1px solid #4DD5BC;
+    }
+
+    .game__card-face--front {
+        background: linear-gradient(-135deg, #4DD5BC 0%, #286F62 100%);
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("/assets/icons/daLogo.svg") center / 55% auto no-repeat;
+        }
+    }
+
+    .game__card-face--back {
+        background-color: #E8F3F0;
+    }
+
+    .game__card {
+        width: 120px;
+        height: 120px;
+    }
+}
