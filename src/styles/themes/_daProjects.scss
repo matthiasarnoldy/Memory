@@ -4,7 +4,7 @@
 html:has(body.theme--da-projects),
 body.theme--da-projects,
 body.theme--da-projects * {
-    scrollbar-color: #4dd5bc transparent;
+    scrollbar-color: #1E7594 transparent;
 }
 
 html:has(body.theme--da-projects)::-webkit-scrollbar,
@@ -23,7 +23,7 @@ body.theme--da-projects *::-webkit-scrollbar-track {
 html:has(body.theme--da-projects)::-webkit-scrollbar-thumb,
 body.theme--da-projects::-webkit-scrollbar-thumb,
 body.theme--da-projects *::-webkit-scrollbar-thumb {
-    background-color: #4dd5bc;
+    background-color: #1E7594;
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: padding-box;

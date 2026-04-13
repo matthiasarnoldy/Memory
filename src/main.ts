@@ -23,7 +23,6 @@ const themeImageMap: Record<string, string> = {
     CodeVibesTheme: '../public/assets/img/codeVibes.png',
     GamingTheme: '../public/assets/img/gaming.png',
     DaProjectsTheme: '../public/assets/img/daProjects.png',
-    FoodsTheme: '../public/assets/img/foods.png',
 };
 
 const dividerIconPaths = {
@@ -47,7 +46,6 @@ const themeClassMap: Record<string, string> = {
     CodeVibesTheme: 'theme--codevibes',
     GamingTheme: 'theme--gaming',
     DaProjectsTheme: 'theme--da-projects',
-    FoodsTheme: 'theme--foods',
 };
 
 const themeCardImageMap: Record<string, string[]> = {
@@ -110,26 +108,6 @@ const themeCardImageMap: Record<string, string[]> = {
         '../public/assets/img/daProjects/sakura.png',
         '../public/assets/img/daProjects/sharkie.png',
         '../public/assets/img/daProjects/videoFlix.png',
-    ],
-    FoodsTheme: [
-        '../public/assets/img/foods/burger.png',
-        '../public/assets/img/foods/cheeseCake.png',
-        '../public/assets/img/foods/choclateCake.png',
-        '../public/assets/img/foods/corndog.png',
-        '../public/assets/img/foods/cupcake.png',
-        '../public/assets/img/foods/donut.png',
-        '../public/assets/img/foods/icecream.png',
-        '../public/assets/img/foods/macaron.png',
-        '../public/assets/img/foods/pizza.png',
-        '../public/assets/img/foods/pommes.png',
-        '../public/assets/img/foods/pretzel.png',
-        '../public/assets/img/foods/sandwich.png',
-        '../public/assets/img/foods/shrimps.png',
-        '../public/assets/img/foods/sushi.png',
-        '../public/assets/img/foods/taco.png',
-        '../public/assets/img/foods/waffle.png',
-        '../public/assets/img/foods/wings.png',
-        '../public/assets/img/foods/wrap.png',
     ],
 };
 

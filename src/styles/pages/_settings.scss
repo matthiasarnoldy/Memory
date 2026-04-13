@@ -41,10 +41,10 @@
     }
 
     .options__choosed {
-        @include m.flex($justify: space-between, $align: flex-end, $direction: column);
+        @include m.flex($justify: space-between, $align: flex-end, $direction: column, $gap: 48px);
 
         @include m.breakpoint(1080px) {
-            @include m.flex($justify: space-between, $align: center, $direction: column, $gap: 48px);
+            @include m.flex($justify: space-between, $align: center, $direction: column);
         }
 
         >img {
