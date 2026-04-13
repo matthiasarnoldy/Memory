@@ -122,6 +122,12 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
     .button--secondary {
         background-color: #86E9D633;
         border: 1px solid #4DD5BC;
+
+        &:hover {
+            background-color: #86E9D642;
+            outline: 2px solid #4DD5BC;
+            box-shadow: 6px 6px 6px #4DD5BC33;
+        }
     }
 
     .game__card-face--front {
@@ -137,6 +143,12 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
 
     .game__card-face--back {
         background-color: #E8F3F0;
+        border: 5px solid transparent;
+
+        &.is-match {
+        border: 5px solid #4DD5BC;
+        box-shadow: 6px 6px 8px #4DD5BC4D;
+        }
     }
 
     .game__card {

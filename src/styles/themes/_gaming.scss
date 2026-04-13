@@ -1,0 +1,125 @@
+@use "../abstract/variables" as v;
+@use "../abstract/mixins" as m;
+
+html:has(body.theme--da-projects),
+body.theme--da-projects,
+body.theme--da-projects * {
+    scrollbar-color: #4dd5bc transparent;
+}
+
+html:has(body.theme--da-projects)::-webkit-scrollbar,
+body.theme--da-projects::-webkit-scrollbar,
+body.theme--da-projects *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+html:has(body.theme--da-projects)::-webkit-scrollbar-track,
+body.theme--da-projects::-webkit-scrollbar-track,
+body.theme--da-projects *::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html:has(body.theme--da-projects)::-webkit-scrollbar-thumb,
+body.theme--da-projects::-webkit-scrollbar-thumb,
+body.theme--da-projects *::-webkit-scrollbar-thumb {
+    background-color: #4dd5bc;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.theme--da-projects {
+    background-color: #ffffff;
+
+    .game__header {
+        background-color: #f0f3f4;
+        border-radius: 10px;
+    }
+
+    .game__score {
+        background-color: #ffffff;
+
+        .score__player {
+            gap: 4px;
+
+            .score__player--number {
+                font-family: "Figtree";
+                font-size: 30px;
+                font-weight: 700;
+                display: inline-flex;
+                align-items: center;
+            }
+        }
+
+        .score__player:first-child {
+            color: #EA6900;
+        }
+
+        .score__player:last-child {
+            color: #077fc5;
+        }
+    }
+
+    .current__player {
+        svg {
+            border-radius: 8px;
+        }
+
+        &--text {
+            font-family: "Figtree";
+            color: #1E7594;
+        }
+    }
+
+    .button--secondary {
+        font-family: "Figtree";
+        font-size: 20px;
+        font-weight: 700;
+        padding: 12px 20px;
+        background-color: #BFE5F2;
+        color: #1E7594;
+        border: none;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: #1E7594;
+            color: #ffffff;
+            box-shadow: 3px 3px 5px #2F2E2E33;
+        }
+    }
+
+    .game__card-face--front {
+        background-color: #1E7594;
+        border-radius: 13px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("/assets/icons/daLogo.svg") center / 55% auto no-repeat;
+        }
+    }
+
+    .game__card-face--back {
+        background-color: #EAF2F4;
+        border: 2px solid transparent;
+        border-radius: 13px;
+
+        img {
+            max-width: 72%;
+            max-height: 72%;
+            width: auto;
+            height: auto;
+        }
+
+        &.is-match {
+            border: 2px solid #1E7594;
+        }
+    }
+
+    .game__card {
+        width: 120px;
+        height: 100px;
+    }
+}
