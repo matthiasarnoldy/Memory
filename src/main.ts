@@ -48,6 +48,16 @@ const themeClassMap: Record<string, string> = {
     DaProjectsTheme: 'theme--da-projects',
 };
 
+type ExitConfirmOverride = {
+    text?: string;
+    back?: string;
+    exit?: string;
+};
+
+const themeExitOverrideMap: Record<string, ExitConfirmOverride> = {
+    gaming: { back: 'No, back to game', exit: 'Yes, exit game' },
+};
+
 const themeCardImageMap: Record<string, string[]> = {
     CodeVibesTheme: [
         '../public/assets/img/codeVibes/angular.png',
@@ -111,6 +121,15 @@ const themeCardImageMap: Record<string, string[]> = {
     ],
 };
 
+let isBoardInteractionLocked = false;
+let firstOpenedCard: HTMLButtonElement | null = null;
+let secondOpenedCard: HTMLButtonElement | null = null;
+let activePlayerIndex = 0;
+let playerScores: number[] = [];
+let isGameFinished = false;
+
+const playerCount = 2;
+
 function init() {
     if (document.body.classList.contains('settings')) initSettingsPage();
     if (document.body.classList.contains('game')) initGamePage();
@@ -120,7 +139,10 @@ function initGamePage() {
     const savedSettings = getSavedSettings();
     if (!savedSettings) return;
     applyThemeClass(savedSettings.theme);
+    activePlayerIndex = savedSettings.player === 'Orange' ? 1 : 0;
+    initScoreBoard();
     renderGameBoard(savedSettings.boardSize, savedSettings.theme);
+    initExitButton();
 }
 
 function initSettingsPage() {
@@ -141,7 +163,6 @@ function initPlayButton() {
             initSelectedSummary();
         });
     });
-
     updatePlayButtonState(playButton);
 }
 
@@ -267,6 +288,8 @@ function applyThemeClass(theme: string) {
 function renderGameBoard(boardSize: string, theme: string) {
     const gameBoard = document.querySelector<HTMLElement>('.game__main');
     if (!gameBoard) return;
+    isGameFinished = false;
+    removeGameOverScreen();
     const boardRenderData = getBoardRenderData(boardSize, theme);
     if (!boardRenderData) return;
     const { gridSize, fieldCount, pairCount, themeImages } = boardRenderData;
@@ -294,6 +317,7 @@ function appendGameCardField(gameBoard: HTMLElement, cardIndex: number, cardImag
     const cardField = document.createElement('button');
     cardField.className = 'game__card';
     cardField.type = 'button';
+    cardField.dataset.cardKey = cardImagePath;
     cardField.setAttribute('aria-label', `Card ${cardIndex + 1}`);
     cardField.setAttribute('aria-pressed', 'false');
     buildGameCardContent(cardField, cardIndex, cardImagePath);
@@ -312,9 +336,205 @@ function buildGameCardContent(cardField: HTMLButtonElement, cardIndex: number, c
 
 function attachCardFlipHandler(cardField: HTMLButtonElement) {
     cardField.addEventListener('click', () => {
-        const isFlipped = cardField.classList.toggle('is-flipped');
-        cardField.setAttribute('aria-pressed', String(isFlipped));
+        handleCardFlip(cardField);
     });
+}
+
+function handleCardFlip(cardField: HTMLButtonElement) {
+    if (isCardNotFlippable(cardField)) return;
+    flipCardUp(cardField);
+    if (!firstOpenedCard) {
+        firstOpenedCard = cardField;
+        return;
+    }
+    secondOpenedCard = cardField;
+    isBoardInteractionLocked = true;
+    resolveOpenedPair();
+}
+
+function isCardNotFlippable(cardField: HTMLButtonElement): boolean {
+    return isGameFinished
+        || isBoardInteractionLocked
+        || cardField.classList.contains('is-flipped')
+        || cardField.classList.contains('is-match');
+}
+
+function flipCardUp(cardField: HTMLButtonElement) {
+    cardField.classList.add('is-flipped');
+    cardField.setAttribute('aria-pressed', 'true');
+}
+
+function resolveOpenedPair() {
+    if (!firstOpenedCard || !secondOpenedCard) return;
+    const hasMatch = firstOpenedCard.dataset.cardKey === secondOpenedCard.dataset.cardKey;
+    if (hasMatch) {
+        markCardAsMatched(firstOpenedCard);
+        markCardAsMatched(secondOpenedCard);
+        addPointToActivePlayer();
+        checkGameOver();
+        resetBoardOpenPairState();
+        return;
+    }
+    window.setTimeout(() => {
+        if (firstOpenedCard) flipCardDown(firstOpenedCard);
+        if (secondOpenedCard) flipCardDown(secondOpenedCard);
+        switchActivePlayer();
+        resetBoardOpenPairState();
+    }, 1000);
+}
+
+function markCardAsMatched(cardField: HTMLButtonElement) {
+    cardField.classList.add('is-match');
+    const cardBackFace = cardField.querySelector<HTMLElement>('.game__card-face--back');
+    cardBackFace?.classList.add('is-match');
+}
+
+function flipCardDown(cardField: HTMLButtonElement) {
+    cardField.classList.remove('is-flipped');
+    cardField.setAttribute('aria-pressed', 'false');
+}
+
+function resetBoardOpenPairState() {
+    firstOpenedCard = null;
+    secondOpenedCard = null;
+    isBoardInteractionLocked = false;
+}
+
+function initScoreBoard() {
+    playerScores = Array.from({ length: playerCount }, () => 0);
+    updateScoreBoard();
+    updateCurrentPlayerDisplay();
+}
+
+function addPointToActivePlayer() {
+    if (activePlayerIndex < 0 || activePlayerIndex >= playerScores.length) return;
+    playerScores[activePlayerIndex] += 1;
+    updateScoreBoard();
+}
+
+function updateScoreBoard() {
+    const scoreElements = document.querySelectorAll<HTMLElement>('.score__player--number');
+    scoreElements.forEach((scoreElement, index) => {
+        scoreElement.textContent = String(playerScores[index] ?? 0);
+    });
+}
+
+function switchActivePlayer() {
+    activePlayerIndex = (activePlayerIndex + 1) % playerCount;
+    updateCurrentPlayerDisplay();
+}
+
+function updateCurrentPlayerDisplay() {
+    const currentPlayerText = document.querySelector<HTMLElement>('.current__player--text');
+    if (currentPlayerText) currentPlayerText.textContent = 'Current player:';
+    const currentPlayerContainer = document.querySelector<HTMLElement>('.current__player');
+    const currentPlayerIcons = document.querySelectorAll<SVGSVGElement>('.current__player svg');
+    if (!currentPlayerIcons.length) return;
+    const normalizedPlayerIndex = activePlayerIndex % currentPlayerIcons.length;
+    if (currentPlayerContainer) {
+        currentPlayerContainer.setAttribute('data-active-player', String(normalizedPlayerIndex));
+    }
+    currentPlayerIcons.forEach((icon, index) => {
+        icon.classList.toggle( 'current__player--active', index === normalizedPlayerIndex);
+    });
+}
+
+function checkGameOver() {
+    const allCards = document.querySelectorAll<HTMLButtonElement>('.game__card');
+    if (!allCards.length) return;
+    const matchedCardsCount = document.querySelectorAll<HTMLButtonElement>('.game__card.is-match').length;
+    const allPairsFound = matchedCardsCount === allCards.length;
+    if (!allPairsFound) return;
+    handleGameFinished();
+}
+
+function handleGameFinished() {
+    if (isGameFinished) return;
+    isGameFinished = true;
+    isBoardInteractionLocked = true;
+    const activeThemeName = getActiveThemeName();
+    showGameOverScreen(activeThemeName);
+    setTimeout(() => {
+        removeGameOverScreen();
+        showGameNavScreen(activeThemeName);
+    }, 1200);
+}
+
+function getActiveThemeName(): string {
+    const activeThemeClass = Array.from(document.body.classList).find((className) => className.startsWith('theme--'));
+    return activeThemeClass ? activeThemeClass.replace('theme--', '') : 'default';
+}
+
+function showGameOverScreen(themeName: string) {
+    removeGameOverScreen();
+    const gameOverTemplate = document.querySelector<HTMLTemplateElement>('#game-over-template');
+    if (!gameOverTemplate) return;
+    const gameOverScreen = gameOverTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
+    if (!gameOverScreen) return;
+    gameOverScreen.classList.add(`game-over-screen--${themeName}`);
+    const summaryContainer = gameOverScreen.querySelector<HTMLElement>('.game-over-screen__summary');
+    const sourceScoreBoard = document.querySelector<HTMLElement>('.game__header .game__score');
+    if (summaryContainer && sourceScoreBoard) {
+        const finalScoreBoard = sourceScoreBoard.cloneNode(true) as HTMLElement;
+        finalScoreBoard.classList.add('game-over-screen__game-score');
+        const finalScoreNumbers = finalScoreBoard.querySelectorAll<HTMLElement>('.score__player--number');
+        finalScoreNumbers.forEach((scoreElement, index) => {
+            scoreElement.textContent = String(playerScores[index] ?? 0);
+        });
+        summaryContainer.appendChild(finalScoreBoard);
+    }
+    document.body.appendChild(gameOverScreen);
+}
+
+function removeGameOverScreen() {
+    document.querySelector('.game-over-screen')?.remove();
+}
+
+function initExitButton() {
+    const exitBtn = document.querySelector<HTMLAnchorElement>('#exit-game-btn');
+    if (!exitBtn) return;
+    exitBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        showExitConfirm(getActiveThemeName());
+    });
+}
+
+function showExitConfirm(themeName: string) {
+    if (document.querySelector('.exit-confirm')) return;
+    const template = document.querySelector<HTMLTemplateElement>('#exit-confirm-template');
+    if (!template) return;
+    const popup = template.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
+    if (!popup) return;
+    const override = themeExitOverrideMap[themeName];
+    if (override) {
+        if (override.text) {
+            const textEl = popup.querySelector<HTMLElement>('.exit-confirm__text');
+            if (textEl) textEl.textContent = override.text;
+        }
+        if (override.back) {
+            const backLabelEl = popup.querySelector<HTMLElement>('.exit-confirm__back');
+            if (backLabelEl) backLabelEl.textContent = override.back;
+        }
+        if (override.exit) {
+            const exitLabelEl = popup.querySelector<HTMLElement>('.exit-confirm__exit');
+            if (exitLabelEl) exitLabelEl.textContent = override.exit;
+        }
+    }
+    const backBtn = popup.querySelector<HTMLButtonElement>('.exit-confirm__back');
+    backBtn?.addEventListener('click', () => popup.remove());
+    popup.addEventListener('click', (event) => {
+        if (event.target === popup) popup.remove();
+    });
+    document.body.appendChild(popup);
+}
+
+function showGameNavScreen(themeName: string) {
+    const gameNavTemplate = document.querySelector<HTMLTemplateElement>('#game-nav-template');
+    if (!gameNavTemplate) return;
+    const gameNavScreen = gameNavTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
+    if (!gameNavScreen) return;
+    gameNavScreen.classList.add(`game-nav-screen--${themeName}`);
+    document.body.appendChild(gameNavScreen);
 }
 
 function createCardFrontFace(): HTMLSpanElement {

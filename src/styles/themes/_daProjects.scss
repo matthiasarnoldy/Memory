@@ -39,6 +39,7 @@ body.theme--da-projects *::-webkit-scrollbar-thumb {
 
     .game__score {
         background-color: #ffffff;
+        flex-direction: row-reverse;
 
         .score__player {
             gap: 4px;
@@ -53,22 +54,35 @@ body.theme--da-projects *::-webkit-scrollbar-thumb {
         }
 
         .score__player:first-child {
-            color: #EA6900;
+            color: #097fc5;
+
+            svg path {
+                fill: #097fc5;
+            }
         }
 
         .score__player:last-child {
-            color: #077fc5;
+            color: #ea6900;
+
+            svg path {
+                fill: #ea6900;
+            }
         }
     }
 
     .current__player {
         svg {
+            display: none;
             border-radius: 8px;
         }
 
         &--text {
             font-family: "Figtree";
             color: #1E7594;
+        }
+
+        svg.current__player--active {
+            display: block;
         }
     }
 
@@ -121,5 +135,39 @@ body.theme--da-projects *::-webkit-scrollbar-thumb {
     .game__card {
         width: 120px;
         height: 100px;
+    }
+
+    .game-over-screen--da-projects {
+
+        .game-over-screen__title,
+        .game-over-screen__label {
+            font-family: "Figtree";
+        }
+    }
+
+    .button--popup {
+        font-family: "Figtree";
+        font-size: 16px;
+        font-weight: 700;
+        padding: 12px 20px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        box-shadow: 3px 3px 5px #2F2E2E33;
+
+        &:hover {
+            color: #ffffff;
+            box-shadow: none;
+            transform: scale(1, 1);
+        }
+    }
+
+    .exit-confirm__exit {
+        background-color: #FD8A81;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: #ED5B50;
+        }
     }
 }

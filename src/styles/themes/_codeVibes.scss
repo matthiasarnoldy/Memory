@@ -100,6 +100,7 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
     .current__player {
         svg {
             display: none;
+            border-radius: 8px;
         }
 
         &::after {
@@ -109,6 +110,10 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
             display: block;
             background: url("/assets/icons/arrowBlue.png") center / contain no-repeat;
             flex-shrink: 0;
+        }
+
+        &[data-active-player="1"]::after {
+            background-image: url("/assets/icons/arrowOrange.png");
         }
 
         &--text {
@@ -154,5 +159,58 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
     .game__card {
         width: 120px;
         height: 120px;
+    }
+
+    // .game-over-screen--codevibes {
+
+    // }
+
+    .exit-confirm__text {
+        font-family: "Red Rose";
+        font-size: 32px;
+    }
+
+    .button--popup {
+        font-family: "Red Rose";
+        font-size: 20px;
+        font-weight: 700;
+        padding: 16px 24px;
+        border: none;
+        outline: none;
+        border-radius: 0;
+        box-shadow: none;
+
+        &:hover {
+            color: #ffffff;
+            box-shadow: none;
+            transform: scale(1, 1);
+        }
+    }
+
+    .exit-confirm__back {
+        background-color: #66CFBC;
+        border: 3px solid transparent;
+        outline: none;
+        color: #ffffff;
+
+        &:hover {
+            border: 3px solid #3ABCA4;
+            outline: none;
+            background-color: #66CFBCB2;
+            color: #ffffff;
+        }
+    }
+
+    .exit-confirm__exit {
+        background-color: #86E9D624;
+        border: 2px solid #4DD5BC;
+        color: #4DD5BC;
+
+        &:hover {
+            border: 2px solid #4DD5BC;
+            outline: 1px solid #4DD5BC;
+            background-color: #86E9D642;
+            color: #4DD5BC;
+        }
     }
 }

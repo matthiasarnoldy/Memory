@@ -1,4 +1,5 @@
 @use "../abstract/mixins" as m;
+@use "../abstract/variables" as v;
 
 .game {
     padding: 40px 110px;
@@ -85,5 +86,103 @@
         object-fit: contain;
         user-select: none;
         pointer-events: none;
+    }
+}
+
+.game-over-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: v.$primary;
+    @include m.flex;
+    padding: 0;
+}
+
+.game-over-screen__panel {
+    width: 100%;
+    height: 100%;
+    padding: 48px 24px;
+    @include m.flex($direction: column, $justify: center, $gap: 124px);
+    margin: 0 auto;
+}
+
+.game-over-screen__title {
+    font-size: 124px;
+    font-weight: 800;
+    color: #ffffff;
+    text-align: center;
+}
+
+.game-over-screen__summary {
+    @include m.flex($direction: column, $gap: 24px);
+}
+
+.game-over-screen__label {
+    font-size: 26px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.game-over-screen__game-score {
+    width: 100%;
+}
+
+.game-nav-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 101;
+    background: v.$primary;
+    @include m.flex;
+}
+
+.game-nav-screen__panel {
+    @include m.flex($direction: column, $justify: center, $gap: 24px);
+}
+
+.exit-confirm {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    @include m.flex;
+}
+
+.exit-confirm__panel {
+    background: #F0F6F9;
+    border-radius: 20px;
+    padding: 40px;
+    @include m.flex($direction: column, $gap: 40px);
+}
+
+.exit-confirm__text {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 40px;
+    color: #294F60;
+    text-align: center;
+}
+
+.exit-confirm__actions {
+    @include m.flex($gap: 24px);
+
+    .button--popup {
+        font-family: "Figtree";
+        font-size: 16px; 
+        font-weight: 700; 
+        padding: 12px 20px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        box-shadow: 3px 3px 5px #2F2E2E33;
+        cursor: pointer;
+    }
+
+    .exit-confirm__back {
+        background-color: #BFE5F2;
+        color: #1E7594;
+    }
+
+    .exit-confirm__exit {
+        background-color: #FD8A81;
+        color: #FFFFFF;
     }
 }

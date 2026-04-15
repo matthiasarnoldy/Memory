@@ -39,6 +39,7 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
 
     .game__score {
         background-color: #ffffff;
+        flex-direction: row-reverse;
 
         .score__player {
             gap: 4px;
@@ -53,22 +54,35 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
         }
 
         .score__player:first-child {
-            color: #EA6900;
+            color: #097fc5;
+
+            svg path {
+                fill: #097fc5;
+            }
         }
 
         .score__player:last-child {
-            color: #077fc5;
+            color: #ea6900;
+
+            svg path {
+                fill: #ea6900;
+            }
         }
     }
 
     .current__player {
         svg {
+            display: none;
             border-radius: 3px;
         }
 
         &--text {
             font-family: "Orbitron";
             color: #ffffff;
+        }
+
+        svg.current__player--active {
+            display: block;
         }
     }
 
@@ -83,7 +97,7 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
         border-radius: 10px;
         outline: 1px solid transparent;
 
-        > svg {
+        >svg {
             transition: all 100ms ease-in-out;
         }
 
@@ -92,7 +106,7 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
             outline-color: #E71C4F;
             box-shadow: 3px 3px 5px #2F2E2E33;
 
-            > svg {
+            >svg {
                 color: #E71C4F;
             }
         }
@@ -119,5 +133,63 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
     .game__card {
         width: 105px;
         height: 120px;
+    }
+
+    .game-over-screen--gaming {
+
+        .game-over-screen__title,
+        .game-over-screen__label {
+            font-family: "Orbitron";
+        }
+    }
+
+    .exit-confirm__panel {
+        @include m.flex($direction: column, $gap: 54px);
+    }
+
+    .exit-confirm__text {
+        font-family: "Orbitron";
+    }
+
+    .button--popup {
+        font-family: "Orbitron";
+        font-size: 16px;
+        font-weight: 700;
+        padding: 12px 20px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        box-shadow: none;
+
+        &:hover {
+            color: #ffffff;
+            box-shadow: none;
+            transform: scale(1, 1);
+            box-shadow: 3px 3px 5px #2F2E2E33;
+        }
+    }
+
+    .exit-confirm__back {
+        background-color: #ED1B76;
+        border: 2px solid transparent;
+        color: #ffffff;
+
+        &:hover {
+            border: 2px solid #E71C4F;
+            background-color: #F2C7DA14;
+            color: #ED1B76;
+        }
+    }
+
+    .exit-confirm__exit {
+        background-color: #ED1B7614;
+        border: 2px solid #E71C4F;
+        color: #ED1B76;
+
+        &:hover {
+            border: 2px solid transparent;
+            background-color: #ED1B76;
+            color: #ffffff;
+        }
     }
 }
