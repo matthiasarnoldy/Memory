@@ -1,3 +1,4 @@
+@use "../abstract/mixins" as m;
 @use "../abstract/variables" as v;
 
 html:has(body.theme--codevibes),
@@ -151,8 +152,8 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
         border: 5px solid transparent;
 
         &.is-match {
-        border: 5px solid #4DD5BC;
-        box-shadow: 6px 6px 8px #4DD5BC4D;
+            border: 5px solid #4DD5BC;
+            box-shadow: 6px 6px 8px #4DD5BC4D;
         }
     }
 
@@ -161,9 +162,124 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
         height: 120px;
     }
 
-    // .game-over-screen--codevibes {
+    .game-over-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: v.$primary;
+        @include m.flex;
+        padding: 0;
+    }
 
-    // }
+    .game-over-screen__panel {
+        @include m.flex($direction: column, $justify: center, $gap: 124px);
+    }
+
+    .game-over-screen__title {
+        position: relative;
+        font-family: "Red Rose";
+        font-size: 124px;
+        font-weight: 800;
+        color: #ffffff;
+        white-space: nowrap;
+        z-index: 10;
+
+        &::after {
+            content: "Game over";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            color: #4DD5BC;
+            text-shadow: 0 0 3px #4dd5bc;
+            z-index: 1;
+        }
+    }
+
+    .game-over-screen__summary {
+        @include m.flex($direction: column, $gap: 24px);
+    }
+
+    .game-over-screen__label {
+        font-family: "Red Rose";
+        font-size: 26px;
+        font-weight: 400;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .game-over-screen__game-score {
+        padding: 17px 20px;
+        @include m.flex($gap: 32px);
+
+        .score__player {
+            @include m.flex($gap: 4px);
+        }
+    }
+
+    .game-nav-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 101;
+        background: v.$primary;
+        color: #ffffff;
+        @include m.flex($justify: flex-start, $direction: column);
+    }
+
+    .nav-screen__confetti {
+        width: 80%;
+        display: block;
+    }
+
+    .game-nav-screen__panel {
+        @include m.flex($direction: column, $justify: center, $gap: 64px);
+
+        .nav-screen__text {
+            @include m.flex($direction: column, $gap: 10px);
+
+            .nav-screen--description {
+                font-family: "Red Rose";
+                font-size: 40px;
+                font-weight: 400;
+            }
+
+            .nav-screen--title {
+                font-family: "Red Rose";
+                font-size: 60px;
+                font-weight: 700;
+                color: #F58E39;
+            }
+        }
+
+        .nav-screen__winner-graphic {
+            background-image: url("/assets/img/chessPawnOrange.png");
+        }
+
+        .game-nav-screen__btn {
+            font-family: "Red Rose";
+            font-size: 24px;
+            font-weight: 700;
+            padding: 16px 24px;
+            background-color: #86E9D633;
+            color: #ffffff;
+            border: 1px solid #4DD5BC;
+            outline: 2px solid transparent;
+
+            &:hover {
+                background-color: #86E9D642;
+                outline: 2px solid #4DD5BC;
+                transform: scale(1, 1);
+            }
+        }
+
+        &.blue {
+            .nav-screen--title {
+                color: #2BB1FF;
+            }
+            .nav-screen__winner-graphic {
+                background-image: url("/assets/img/chessPawnBlue.png");
+            }
+        }
+    }
 
     .exit-confirm__text {
         font-family: "Red Rose";

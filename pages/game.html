@@ -10,7 +10,7 @@
 <body class="game">
     <header class="game__header">
         <div class="game__score">
-            <div class="score__player">
+            <div class="score__player" data-player="orange">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_2290_5045" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32"
                         height="32">
@@ -24,7 +24,7 @@
                 </svg>
                 <span class="score__player--number">0</span>
             </div>
-            <div class="score__player">
+            <div class="score__player" data-player="blue">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_2290_5046" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32"
                         height="32">
@@ -41,7 +41,8 @@
         </div>
         <div class="current__player">
             <span class="current__player--text">Current player:</span>
-            <svg class="current__player--active" width="40" height="40" viewBox="0 0 32 32" fill="#097FC5" xmlns="http://www.w3.org/2000/svg">
+            <svg class="current__player--active" width="40" height="40" viewBox="0 0 32 32" fill="#097FC5"
+                xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_2290_5047" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32"
                     height="32">
                     <rect width="32" height="32" fill="#ffffff" />
@@ -97,8 +98,14 @@
 
     <template id="game-nav-template">
         <section class="game-nav-screen">
+            <img class="nav-screen__confetti" src="../public/assets/img/confetti.png" alt="">
             <div class="game-nav-screen__panel">
-                <a href="./settings.html" class="button button--primary game-nav-screen__btn">Back to settings</a>
+                <div class="nav-screen__text">
+                    <h2 class="nav-screen--description">The winner is</h2>
+                    <h1 class="nav-screen--title">ORANGE PLAYER</h1>
+                </div>
+                <div class="nav-screen__winner-graphic" aria-hidden="true"></div>
+                <a href="./settings.html" class="button button--primary game-nav-screen__btn">Home</a>
             </div>
         </section>
     </template>
@@ -109,7 +116,8 @@
                 <p class="exit-confirm__text">Are you sure you want to <br> quit the game?</p>
                 <div class="exit-confirm__actions">
                     <a href="#" class="button button--secondary button--popup exit-confirm__back">Back to game</a>
-                    <a href="./settings.html" class="button button--secondary button--popup exit-confirm__exit">Exit game</a>
+                    <a href="./settings.html" class="button button--secondary button--popup exit-confirm__exit">Exit
+                        game</a>
                 </div>
             </div>
         </div>

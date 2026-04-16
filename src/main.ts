@@ -19,6 +19,8 @@ type GridSize = {
     cols: number;
 };
 
+type PlayerColor = 'orange' | 'blue';
+
 const themeImageMap: Record<string, string> = {
     CodeVibesTheme: '../public/assets/img/codeVibes.png',
     GamingTheme: '../public/assets/img/gaming.png',
@@ -124,11 +126,12 @@ const themeCardImageMap: Record<string, string[]> = {
 let isBoardInteractionLocked = false;
 let firstOpenedCard: HTMLButtonElement | null = null;
 let secondOpenedCard: HTMLButtonElement | null = null;
-let activePlayerIndex = 0;
-let playerScores: number[] = [];
+let activePlayerColor: PlayerColor = 'blue';
+let playerScores: Record<PlayerColor, number> = {
+    orange: 0,
+    blue: 0,
+};
 let isGameFinished = false;
-
-const playerCount = 2;
 
 function init() {
     if (document.body.classList.contains('settings')) initSettingsPage();
@@ -139,7 +142,7 @@ function initGamePage() {
     const savedSettings = getSavedSettings();
     if (!savedSettings) return;
     applyThemeClass(savedSettings.theme);
-    activePlayerIndex = savedSettings.player === 'Orange' ? 1 : 0;
+    activePlayerColor = savedSettings.player === 'Orange' ? 'orange' : 'blue';
     initScoreBoard();
     renderGameBoard(savedSettings.boardSize, savedSettings.theme);
     initExitButton();
@@ -289,7 +292,6 @@ function renderGameBoard(boardSize: string, theme: string) {
     const gameBoard = document.querySelector<HTMLElement>('.game__main');
     if (!gameBoard) return;
     isGameFinished = false;
-    removeGameOverScreen();
     const boardRenderData = getBoardRenderData(boardSize, theme);
     if (!boardRenderData) return;
     const { gridSize, fieldCount, pairCount, themeImages } = boardRenderData;
@@ -368,11 +370,7 @@ function resolveOpenedPair() {
     if (!firstOpenedCard || !secondOpenedCard) return;
     const hasMatch = firstOpenedCard.dataset.cardKey === secondOpenedCard.dataset.cardKey;
     if (hasMatch) {
-        markCardAsMatched(firstOpenedCard);
-        markCardAsMatched(secondOpenedCard);
-        addPointToActivePlayer();
-        checkGameOver();
-        resetBoardOpenPairState();
+        isCardMatching(firstOpenedCard, secondOpenedCard)
         return;
     }
     window.setTimeout(() => {
@@ -381,6 +379,14 @@ function resolveOpenedPair() {
         switchActivePlayer();
         resetBoardOpenPairState();
     }, 1000);
+}
+
+function isCardMatching(firstOpenedCard: HTMLButtonElement, secondOpenedCard: HTMLButtonElement) {
+    markCardAsMatched(firstOpenedCard);
+    markCardAsMatched(secondOpenedCard);
+    addPointToActivePlayer();
+    checkGameOver();
+    resetBoardOpenPairState();
 }
 
 function markCardAsMatched(cardField: HTMLButtonElement) {
@@ -401,26 +407,30 @@ function resetBoardOpenPairState() {
 }
 
 function initScoreBoard() {
-    playerScores = Array.from({ length: playerCount }, () => 0);
+    playerScores = {
+        orange: 0,
+        blue: 0,
+    };
     updateScoreBoard();
     updateCurrentPlayerDisplay();
 }
 
 function addPointToActivePlayer() {
-    if (activePlayerIndex < 0 || activePlayerIndex >= playerScores.length) return;
-    playerScores[activePlayerIndex] += 1;
+    playerScores[activePlayerColor] += 1;
     updateScoreBoard();
 }
 
 function updateScoreBoard() {
     const scoreElements = document.querySelectorAll<HTMLElement>('.score__player--number');
+    const scoreValues: PlayerColor[] = ['blue', 'orange'];
     scoreElements.forEach((scoreElement, index) => {
-        scoreElement.textContent = String(playerScores[index] ?? 0);
+        const color = scoreValues[index];
+        scoreElement.textContent = String(color ? playerScores[color] : 0);
     });
 }
 
 function switchActivePlayer() {
-    activePlayerIndex = (activePlayerIndex + 1) % playerCount;
+    activePlayerColor = activePlayerColor === 'orange' ? 'blue' : 'orange';
     updateCurrentPlayerDisplay();
 }
 
@@ -430,12 +440,12 @@ function updateCurrentPlayerDisplay() {
     const currentPlayerContainer = document.querySelector<HTMLElement>('.current__player');
     const currentPlayerIcons = document.querySelectorAll<SVGSVGElement>('.current__player svg');
     if (!currentPlayerIcons.length) return;
-    const normalizedPlayerIndex = activePlayerIndex % currentPlayerIcons.length;
+    const normalizedPlayerIndex = activePlayerColor === 'blue' ? 0 : 1;
     if (currentPlayerContainer) {
         currentPlayerContainer.setAttribute('data-active-player', String(normalizedPlayerIndex));
     }
     currentPlayerIcons.forEach((icon, index) => {
-        icon.classList.toggle( 'current__player--active', index === normalizedPlayerIndex);
+        icon.classList.toggle('current__player--active', index === normalizedPlayerIndex);
     });
 }
 
@@ -466,7 +476,6 @@ function getActiveThemeName(): string {
 }
 
 function showGameOverScreen(themeName: string) {
-    removeGameOverScreen();
     const gameOverTemplate = document.querySelector<HTMLTemplateElement>('#game-over-template');
     if (!gameOverTemplate) return;
     const gameOverScreen = gameOverTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
@@ -475,15 +484,21 @@ function showGameOverScreen(themeName: string) {
     const summaryContainer = gameOverScreen.querySelector<HTMLElement>('.game-over-screen__summary');
     const sourceScoreBoard = document.querySelector<HTMLElement>('.game__header .game__score');
     if (summaryContainer && sourceScoreBoard) {
-        const finalScoreBoard = sourceScoreBoard.cloneNode(true) as HTMLElement;
-        finalScoreBoard.classList.add('game-over-screen__game-score');
-        const finalScoreNumbers = finalScoreBoard.querySelectorAll<HTMLElement>('.score__player--number');
-        finalScoreNumbers.forEach((scoreElement, index) => {
-            scoreElement.textContent = String(playerScores[index] ?? 0);
-        });
-        summaryContainer.appendChild(finalScoreBoard);
+        addScoreboardToGameOver(sourceScoreBoard, summaryContainer);
     }
     document.body.appendChild(gameOverScreen);
+}
+
+function addScoreboardToGameOver(sourceScoreBoard: HTMLElement, summaryContainer: HTMLElement) {
+    const finalScoreBoard = sourceScoreBoard.cloneNode(true) as HTMLElement;
+    finalScoreBoard.classList.add('game-over-screen__game-score');
+    const finalScoreNumbers = finalScoreBoard.querySelectorAll<HTMLElement>('.score__player--number');
+    const scoreValues: PlayerColor[] = ['blue', 'orange'];
+    finalScoreNumbers.forEach((scoreElement, index) => {
+        const color = scoreValues[index];
+        scoreElement.textContent = String(color ? playerScores[color] : 0);
+    });
+    summaryContainer.appendChild(finalScoreBoard);
 }
 
 function removeGameOverScreen() {
@@ -506,6 +521,16 @@ function showExitConfirm(themeName: string) {
     const popup = template.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
     if (!popup) return;
     const override = themeExitOverrideMap[themeName];
+    createPopupText(override, popup);
+    const backBtn = popup.querySelector<HTMLButtonElement>('.exit-confirm__back');
+    backBtn?.addEventListener('click', () => popup.remove());
+    popup.addEventListener('click', (event) => {
+        if (event.target === popup) popup.remove();
+    });
+    document.body.appendChild(popup);
+}
+
+function createPopupText(override: ExitConfirmOverride, popup: HTMLElement) {
     if (override) {
         if (override.text) {
             const textEl = popup.querySelector<HTMLElement>('.exit-confirm__text');
@@ -520,12 +545,6 @@ function showExitConfirm(themeName: string) {
             if (exitLabelEl) exitLabelEl.textContent = override.exit;
         }
     }
-    const backBtn = popup.querySelector<HTMLButtonElement>('.exit-confirm__back');
-    backBtn?.addEventListener('click', () => popup.remove());
-    popup.addEventListener('click', (event) => {
-        if (event.target === popup) popup.remove();
-    });
-    document.body.appendChild(popup);
 }
 
 function showGameNavScreen(themeName: string) {
@@ -534,7 +553,17 @@ function showGameNavScreen(themeName: string) {
     const gameNavScreen = gameNavTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
     if (!gameNavScreen) return;
     gameNavScreen.classList.add(`game-nav-screen--${themeName}`);
+    const panel = gameNavScreen.querySelector<HTMLElement>('.game-nav-screen__panel');
+    if (panel) {
+        panel.classList.add(getWinningPlayerClass());
+    }
     document.body.appendChild(gameNavScreen);
+}
+
+function getWinningPlayerClass(): 'orange' | 'blue' {
+    if (playerScores.blue > playerScores.orange) return 'blue';
+    if (playerScores.orange > playerScores.blue) return 'orange';
+    return activePlayerColor;
 }
 
 function createCardFrontFace(): HTMLSpanElement {

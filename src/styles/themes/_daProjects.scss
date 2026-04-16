@@ -137,11 +137,46 @@ body.theme--da-projects *::-webkit-scrollbar-thumb {
         height: 100px;
     }
 
-    .game-over-screen--da-projects {
+    .game-over-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: #1E7594;
+        @include m.flex;
+        padding: 0;
+    }
 
-        .game-over-screen__title,
-        .game-over-screen__label {
-            font-family: "Figtree";
+    .game-over-screen__panel {
+        @include m.flex($direction: column, $justify: center, $gap: 104px);
+    }
+
+    .game-over-screen__title {
+        font-family: "Figtree";
+        font-size: 130px;
+        font-weight: 800;
+        color: #FD5B4F;
+        text-shadow: 0 4px 4px #00000040;
+    }
+
+    .game-over-screen__summary {
+        @include m.flex($direction: column, $gap: 24px);
+    }
+
+    .game-over-screen__label {
+        font-family: "Figtree";
+        font-size: 40px;
+        font-weight: 500;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .game-over-screen__game-score {
+        padding: 16px;
+        @include m.flex($gap: 40px);
+        border-radius: 10px;
+
+        .score__player {
+            @include m.flex($gap: 8px);
         }
     }
 
@@ -159,6 +194,67 @@ body.theme--da-projects *::-webkit-scrollbar-thumb {
             color: #ffffff;
             box-shadow: none;
             transform: scale(1, 1);
+        }
+    }
+
+    .game-nav-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 101;
+        background: v.$primary;
+        color: #ffffff;
+        @include m.flex($justify: center, $direction: column);
+    }
+
+    .nav-screen__confetti {
+        width: 100%;
+        display: none;
+    }
+
+    .game-nav-screen__panel {
+        @include m.flex($direction: column, $justify: center, $gap: 64px);
+
+        .nav-screen__text {
+            @include m.flex($direction: column, $gap: 8px);
+
+            .nav-screen--description {
+                font-family: "Figtree";
+                font-size: 40px;
+                font-weight: 400;
+            }
+
+            .nav-screen--title {
+                font-family: "Figtree";
+                font-size: 80px;
+                font-weight: 700;
+                color: #ffffff;
+            }
+        }
+
+        .nav-screen__winner-graphic {
+            background-image: url("/assets/img/chessPawnOrangeWBorder.png");
+        }
+
+        .game-nav-screen__btn {
+            font-family: "Figtree";
+            font-size: 20px;
+            font-weight: 700;
+            padding: 12px 20px;
+            background-color: #BFE5F2;
+            color: #1E7594;
+            border-radius: 10px;
+
+            &:hover {
+                background-color: #1E7594;
+                color: #ffffff;
+                transform: scale(1, 1);
+            }
+        }
+
+        &.blue {
+            .nav-screen__winner-graphic {
+                background-image: url("/assets/img/chessPawnBlueWBorder.png");
+            }
         }
     }
 

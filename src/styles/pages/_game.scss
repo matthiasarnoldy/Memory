@@ -132,11 +132,41 @@
     inset: 0;
     z-index: 101;
     background: v.$primary;
-    @include m.flex;
+    color: #ffffff;
+    @include m.flex($justify: center, $direction: column);
+}
+
+.nav-screen__confetti {
+    width: 100%;
+    display: none;
 }
 
 .game-nav-screen__panel {
-    @include m.flex($direction: column, $justify: center, $gap: 24px);
+    @include m.flex($direction: column, $justify: center, $gap: 64px);
+
+    .nav-screen__text {
+        @include m.flex($direction: column, $gap: 8px);
+
+        .nav-screen--description {
+            font-family: "Orbitron";
+            font-size: 28px;
+            font-weight: 400;
+        }
+
+        .nav-screen--title {
+            font-family: "Orbitron";
+            font-size: 64px;
+            font-weight: 700;
+            color: #EA6900;
+        }
+    }
+
+    .nav-screen__winner-graphic {
+        width: 200px;
+        height: 250px;
+        background: center / contain no-repeat;
+        flex: 0 0 auto;
+    }
 }
 
 .exit-confirm {
@@ -166,8 +196,8 @@
 
     .button--popup {
         font-family: "Figtree";
-        font-size: 16px; 
-        font-weight: 700; 
+        font-size: 16px;
+        font-weight: 700;
         padding: 12px 20px;
         border: none;
         outline: none;

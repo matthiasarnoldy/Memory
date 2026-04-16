@@ -135,11 +135,110 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
         height: 120px;
     }
 
-    .game-over-screen--gaming {
+    .game-over-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: #294F60;
+        @include m.flex;
+        padding: 0;
+    }
 
-        .game-over-screen__title,
-        .game-over-screen__label {
+    .game-over-screen__panel {
+        @include m.flex($direction: column, $justify: center, $gap: 104px);
+    }
+
+    .game-over-screen__title {
+        font-family: "Orbitron";
+        font-size: 124px;
+        font-weight: 900;
+        color: #ED1B76;
+    }
+
+    .game-over-screen__summary {
+        @include m.flex($direction: column, $gap: 24px);
+    }
+
+    .game-over-screen__label {
+        font-family: "Orbitron";
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .game-over-screen__game-score {
+        padding: 8px 16px;
+        @include m.flex($gap: 40px);
+        border-radius: 10px;
+
+        .score__player {
+            @include m.flex($gap: 8px);
+        }
+    }
+
+    .game-nav-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 101;
+        background: v.$primary;
+        color: #ffffff;
+        @include m.flex($justify: center, $direction: column);
+    }
+
+    .nav-screen__confetti {
+        width: 100%;
+        display: none;
+    }
+
+    .game-nav-screen__panel {
+        @include m.flex($direction: column, $justify: center, $gap: 64px);
+
+        .nav-screen__text {
+            @include m.flex($direction: column, $gap: 8px);
+
+            .nav-screen--description {
+                font-family: "Orbitron";
+                font-size: 28px;
+                font-weight: 400;
+            }
+
+            .nav-screen--title {
+                font-family: "Orbitron";
+                font-size: 64px;
+                font-weight: 700;
+                color: #EA6900;
+            }
+        }
+
+        .nav-screen__winner-graphic {
+            width: 288px;
+            height: 344px;
+            background-image: url("/assets/img/pockal.png");
+        }
+
+        .game-nav-screen__btn {
             font-family: "Orbitron";
+            font-size: 20px;
+            font-weight: 700;
+            padding: 12px 20px;
+            background-color: #ED1B7614;
+            color: #ffffff;
+            border: 2px solid #E71C4F;
+            border-radius: 10px;
+            outline: 2px solid transparent;
+
+            &:hover {
+                outline: 2px solid #E71C4F;
+                background-color: #F2C7DA14;
+                transform: scale(1, 1);
+            }
+        }
+
+        &.blue {
+            .nav-screen--title {
+                color: #2298DB;
+            }
         }
     }
 
