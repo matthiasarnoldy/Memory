@@ -134,11 +134,17 @@ let playerScores: Record<PlayerColor, number> = {
 };
 let isGameFinished = false;
 
+/**
+ * Initializes the app after the DOM is loaded.
+ */
 function init() {
     if (document.body.classList.contains('settings')) initSettingsPage();
     if (document.body.classList.contains('game')) initGamePage();
 }
 
+/**
+ * Initializes the game page with saved settings.
+ */
 function initGamePage() {
     const savedSettings = getSavedSettings();
     if (!savedSettings) return;
@@ -149,12 +155,18 @@ function initGamePage() {
     initExitButton();
 }
 
+/**
+ * Initializes the settings page.
+ */
 function initSettingsPage() {
     initPlayButton();
     initPreviewImage();
     initSelectedSummary();
 }
 
+/**
+ * Initializes the play button and its events.
+ */
 function initPlayButton() {
     const playButton = document.querySelector<HTMLAnchorElement>('.button--small');
     if (!playButton) return;
@@ -170,11 +182,17 @@ function initPlayButton() {
     updatePlayButtonState(playButton);
 }
 
+/**
+ * Initializes the preview image for the selected theme.
+ */
 function initPreviewImage() {
     const themePreviewImage = document.querySelector<HTMLImageElement>('.options__choosed > img');
     updateThemePreviewImage(themePreviewImage);
 }
 
+/**
+ * Updates the summary of selected settings.
+ */
 function initSelectedSummary() {
     const selectedThemeText = document.querySelector<HTMLElement>('.settings__selected-theme');
     const selectedPlayerText = document.querySelector<HTMLElement>('.settings__selected-player');
@@ -183,6 +201,10 @@ function initSelectedSummary() {
     updateSelectedSummary(selectedThemeText, selectedPlayerText, selectedBoardSizeText);
 }
 
+/**
+ * Event handler for the play button.
+ * @param event The click event
+ */
 function handlePlayButtonClick(event: MouseEvent) {
     const checkedValues = getCheckedValue();
     if (!hasCompleteSelection(checkedValues)) {
@@ -192,16 +214,30 @@ function handlePlayButtonClick(event: MouseEvent) {
     saveSettings(checkedValues);
 }
 
+/**
+ * Checks if all settings are selected.
+ * @param values The current settings
+ * @returns True if complete
+ */
 function hasCompleteSelection(values: SettingsValues): values is CompleteSettingsValues {
     return Boolean(values.theme && values.player && values.boardSize);
 }
 
+/**
+ * Enables/disables the play button depending on selection.
+ * @param playButton The play button
+ */
 function updatePlayButtonState(playButton: HTMLAnchorElement) {
     const checkedValues = getCheckedValue();
     const isComplete = hasCompleteSelection(checkedValues);
     playButtonActions(playButton, isComplete);
 }
 
+/**
+ * Sets the state and attributes of the play button.
+ * @param playButton The play button
+ * @param isComplete Whether the selection is complete
+ */
 function playButtonActions(playButton: HTMLAnchorElement, isComplete: boolean) {
     playButton.classList.toggle('is-disabled', !isComplete);
     playButton.setAttribute('aria-disabled', String(!isComplete));
@@ -213,6 +249,10 @@ function playButtonActions(playButton: HTMLAnchorElement, isComplete: boolean) {
     playButton.setAttribute('tabindex', '-1');
 }
 
+/**
+ * Updates the divider icons depending on selection state.
+ * @param isComplete Whether the selection is complete
+ */
 function updateSelectedDividerIcons(isComplete: boolean) {
     const dividerIcons = document.querySelectorAll<HTMLImageElement>('.settings__choosed--wrapper img');
     const activeIconPath = isComplete ? dividerIconPaths.active : dividerIconPaths.default;
@@ -221,10 +261,18 @@ function updateSelectedDividerIcons(isComplete: boolean) {
     });
 }
 
+/**
+ * Saves the settings to localStorage.
+ * @param values The settings to save
+ */
 function saveSettings(values: CompleteSettingsValues) {
     localStorage.setItem('memory.settings', JSON.stringify(values));
 }
 
+/**
+ * Updates the preview image for the selected theme.
+ * @param themePreviewImage The preview image element
+ */
 function updateThemePreviewImage(themePreviewImage: HTMLImageElement | null) {
     if (!themePreviewImage) return;
     const selectedTheme = getCheckedValue().theme;
@@ -233,6 +281,12 @@ function updateThemePreviewImage(themePreviewImage: HTMLImageElement | null) {
     themePreviewImage.src = nextImagePath;
 }
 
+/**
+ * Updates the text fields for the selected settings.
+ * @param selectedThemeText Element for theme
+ * @param selectedPlayerText Element for player
+ * @param selectedBoardSizeText Element for board size
+ */
 function updateSelectedSummary(
     selectedThemeText: HTMLElement,
     selectedPlayerText: HTMLElement,
@@ -246,6 +300,11 @@ function updateSelectedSummary(
     if (selectedBoardSizeLabel) selectedBoardSizeText.textContent = "Board - " + selectedBoardSizeLabel;
 }
 
+/**
+ * Gets the label of the selected radio button in a group.
+ * @param groupName Name of the radio group
+ * @returns The label or null
+ */
 function getCheckedLabelText(groupName: string): string | null {
     const checkedInput = document.querySelector<HTMLInputElement>(`input[name="${groupName}"]:checked`);
     if (!checkedInput) return null;
@@ -254,6 +313,10 @@ function getCheckedLabelText(groupName: string): string | null {
     return labelText || checkedInput.value;
 }
 
+/**
+ * Gets the currently selected values from the radio buttons.
+ * @returns The current settings
+ */
 function getCheckedValue(): SettingsValues {
     const checkedTheme = document.querySelector<HTMLInputElement>('input[name="themes"]:checked');
     const checkedPlayer = document.querySelector<HTMLInputElement>('input[name="cardCount"]:checked');
@@ -265,6 +328,10 @@ function getCheckedValue(): SettingsValues {
     };
 }
 
+/**
+ * Loads saved settings from localStorage.
+ * @returns The saved settings or null
+ */
 function getSavedSettings(): CompleteSettingsValues | null {
     const savedSettingsRaw = localStorage.getItem('memory.settings');
     if (!savedSettingsRaw) return null;
@@ -281,6 +348,10 @@ function getSavedSettings(): CompleteSettingsValues | null {
     }
 }
 
+/**
+ * Sets the theme class on the body.
+ * @param theme The theme name
+ */
 function applyThemeClass(theme: string) {
     const allThemeClasses = Object.values(themeClassMap);
     document.body.classList.remove(...allThemeClasses);
@@ -289,6 +360,11 @@ function applyThemeClass(theme: string) {
     document.body.classList.add(activeThemeClass);
 }
 
+/**
+ * Renders the game board based on size and theme.
+ * @param boardSize The board size
+ * @param theme The selected theme
+ */
 function renderGameBoard(boardSize: string, theme: string) {
     const gameBoard = document.querySelector<HTMLElement>('.game__main');
     if (!gameBoard) return;
@@ -306,6 +382,12 @@ function renderGameBoard(boardSize: string, theme: string) {
     }
 }
 
+/**
+ * Provides the data for rendering the board.
+ * @param boardSize The board size
+ * @param theme The selected theme
+ * @returns Board data or null
+ */
 function getBoardRenderData(boardSize: string, theme: string) {
     const gridSize = boardSizeGridMap[boardSize];
     if (!gridSize) return null;
@@ -316,6 +398,12 @@ function getBoardRenderData(boardSize: string, theme: string) {
     return { gridSize, fieldCount, pairCount, themeImages };
 }
 
+/**
+ * Appends a card field to the game board.
+ * @param gameBoard The game board element
+ * @param cardIndex Index of the card
+ * @param cardImagePath Image path of the card
+ */
 function appendGameCardField(gameBoard: HTMLElement, cardIndex: number, cardImagePath: string) {
     const cardField = document.createElement('button');
     cardField.className = 'game__card';
@@ -327,6 +415,12 @@ function appendGameCardField(gameBoard: HTMLElement, cardIndex: number, cardImag
     gameBoard.appendChild(cardField);
 }
 
+/**
+ * Builds the content of a game card.
+ * @param cardField The card button element
+ * @param cardIndex Index of the card
+ * @param cardImagePath Image path of the card
+ */
 function buildGameCardContent(cardField: HTMLButtonElement, cardIndex: number, cardImagePath: string) {
     const cardInner = document.createElement('span');
     cardInner.className = 'game__card-inner';
@@ -337,12 +431,20 @@ function buildGameCardContent(cardField: HTMLButtonElement, cardIndex: number, c
     attachCardFlipHandler(cardField);
 }
 
+/**
+ * Attaches the flip handler to a card.
+ * @param cardField The card button element
+ */
 function attachCardFlipHandler(cardField: HTMLButtonElement) {
     cardField.addEventListener('click', () => {
         handleCardFlip(cardField);
     });
 }
 
+/**
+ * Handles flipping a card.
+ * @param cardField The card button element
+ */
 function handleCardFlip(cardField: HTMLButtonElement) {
     if (isCardNotFlippable(cardField)) return;
     flipCardUp(cardField);
@@ -355,6 +457,11 @@ function handleCardFlip(cardField: HTMLButtonElement) {
     resolveOpenedPair();
 }
 
+/**
+ * Checks if a card cannot be flipped.
+ * @param cardField The card button element
+ * @returns True if not flippable
+ */
 function isCardNotFlippable(cardField: HTMLButtonElement): boolean {
     return isGameFinished
         || isBoardInteractionLocked
@@ -362,11 +469,18 @@ function isCardNotFlippable(cardField: HTMLButtonElement): boolean {
         || cardField.classList.contains('is-match');
 }
 
+/**
+ * Flips a card up.
+ * @param cardField The card button element
+ */
 function flipCardUp(cardField: HTMLButtonElement) {
     cardField.classList.add('is-flipped');
     cardField.setAttribute('aria-pressed', 'true');
 }
 
+/**
+ * Resolves the opened pair.
+ */
 function resolveOpenedPair() {
     if (!firstOpenedCard || !secondOpenedCard) return;
     const hasMatch = firstOpenedCard.dataset.cardKey === secondOpenedCard.dataset.cardKey;
@@ -382,6 +496,11 @@ function resolveOpenedPair() {
     }, 1000);
 }
 
+/**
+ * Checks if the cards match.
+ * @param firstOpenedCard The first opened card
+ * @param secondOpenedCard The second opened card
+ */
 function isCardMatching(firstOpenedCard: HTMLButtonElement, secondOpenedCard: HTMLButtonElement) {
     markCardAsMatched(firstOpenedCard);
     markCardAsMatched(secondOpenedCard);
@@ -390,23 +509,37 @@ function isCardMatching(firstOpenedCard: HTMLButtonElement, secondOpenedCard: HT
     resetBoardOpenPairState();
 }
 
+/**
+ * Marks the card as matched.
+ * @param cardField The card field
+ */
 function markCardAsMatched(cardField: HTMLButtonElement) {
     cardField.classList.add('is-match');
     const cardBackFace = cardField.querySelector<HTMLElement>('.game__card-face--back');
     cardBackFace?.classList.add('is-match');
 }
 
+/**
+ * Flips the card down.
+ * @param cardField The card field
+ */
 function flipCardDown(cardField: HTMLButtonElement) {
     cardField.classList.remove('is-flipped');
     cardField.setAttribute('aria-pressed', 'false');
 }
 
+/**
+ * Resets the board open pair state.
+ */
 function resetBoardOpenPairState() {
     firstOpenedCard = null;
     secondOpenedCard = null;
     isBoardInteractionLocked = false;
 }
 
+/**
+ * Initializes the score board.
+ */
 function initScoreBoard() {
     playerScores = {
         orange: 0,
@@ -417,11 +550,17 @@ function initScoreBoard() {
     updateCurrentPlayerDisplay();
 }
 
+/**
+ * Adds a point to the active player.
+ */
 function addPointToActivePlayer() {
     playerScores[activePlayerColor] += 1;
     updateScoreBoard();
 }
 
+/**
+ * Updates the score board.
+ */
 function updateScoreBoard() {
     const scoreElements = document.querySelectorAll<HTMLElement>('.score__player--number');
     const scoreValues: PlayerColor[] = ['blue', 'orange'];
@@ -431,11 +570,17 @@ function updateScoreBoard() {
     });
 }
 
+/**
+ * Switches the active player.
+ */
 function switchActivePlayer() {
     activePlayerColor = activePlayerColor === 'orange' ? 'blue' : 'orange';
     updateCurrentPlayerDisplay();
 }
 
+/**
+ * Updates the current player display.
+ */
 function updateCurrentPlayerDisplay() {
     const currentPlayerText = document.querySelector<HTMLElement>('.current__player--text');
     if (currentPlayerText) currentPlayerText.textContent = 'Current player:';
@@ -451,6 +596,9 @@ function updateCurrentPlayerDisplay() {
     });
 }
 
+/**
+ * Checks if the game is over.
+ */
 function checkGameOver() {
     const allCards = document.querySelectorAll<HTMLButtonElement>('.game__card');
     if (!allCards.length) return;
@@ -460,6 +608,9 @@ function checkGameOver() {
     handleGameFinished();
 }
 
+/**
+ * Handles the game finished.
+ */
 function handleGameFinished() {
     if (isGameFinished) return;
     isGameFinished = true;
@@ -472,11 +623,19 @@ function handleGameFinished() {
     }, 1200);
 }
 
+/**
+ * Gets the active theme name.
+ * @returns The active theme name
+ */
 function getActiveThemeName(): string {
     const activeThemeClass = Array.from(document.body.classList).find((className) => className.startsWith('theme--'));
     return activeThemeClass ? activeThemeClass.replace('theme--', '') : 'default';
 }
 
+/**
+ * Shows the game over screen.
+ * @param themeName The theme name
+ */
 function showGameOverScreen(themeName: string) {
     const gameOverTemplate = document.querySelector<HTMLTemplateElement>('#game-over-template');
     if (!gameOverTemplate) return;
@@ -491,6 +650,10 @@ function showGameOverScreen(themeName: string) {
     document.body.appendChild(gameOverScreen);
 }
 
+/**
+ * Sets the title end screen.
+ * @param gameNavScreen The game nav screen
+ */
 function setTitleEndScreen(gameNavScreen: HTMLElement) {
     const titleElement = gameNavScreen.querySelector<HTMLElement>('.nav-screen--title');
     if (!titleElement) return;
@@ -503,6 +666,11 @@ function setTitleEndScreen(gameNavScreen: HTMLElement) {
     }
 }
 
+/**
+ * Adds the scoreboard to the game over screen.
+ * @param sourceScoreBoard The source scoreboard
+ * @param summaryContainer The summary container
+ */
 function addScoreboardToGameOver(sourceScoreBoard: HTMLElement, summaryContainer: HTMLElement) {
     const finalScoreBoard = sourceScoreBoard.cloneNode(true) as HTMLElement;
     finalScoreBoard.classList.add('game-over-screen__game-score');
@@ -515,10 +683,16 @@ function addScoreboardToGameOver(sourceScoreBoard: HTMLElement, summaryContainer
     summaryContainer.appendChild(finalScoreBoard);
 }
 
+/**
+ * Removes the game over screen.
+ */
 function removeGameOverScreen() {
     document.querySelector('.game-over-screen')?.remove();
 }
 
+/**
+ * Initializes the exit button.
+ */
 function initExitButton() {
     const exitBtn = document.querySelector<HTMLAnchorElement>('#exit-game-btn');
     if (!exitBtn) return;
@@ -528,6 +702,10 @@ function initExitButton() {
     });
 }
 
+/**
+ * Shows the exit confirm.
+ * @param themeName The theme name
+ */
 function showExitConfirm(themeName: string) {
     if (document.querySelector('.exit-confirm')) return;
     const template = document.querySelector<HTMLTemplateElement>('#exit-confirm-template');
@@ -544,6 +722,11 @@ function showExitConfirm(themeName: string) {
     document.body.appendChild(popup);
 }
 
+/**
+ * Creates the popup text.
+ * @param override The override
+ * @param popup The popup
+ */
 function createPopupText(override: ExitConfirmOverride, popup: HTMLElement) {
     if (override) {
         if (override.text) {
@@ -561,6 +744,10 @@ function createPopupText(override: ExitConfirmOverride, popup: HTMLElement) {
     }
 }
 
+/**
+ * Shows the game nav screen.
+ * @param themeName The theme name
+ */
 function showGameNavScreen(themeName: string) {
     const gameNavTemplate = document.querySelector<HTMLTemplateElement>('#game-nav-template');
     if (!gameNavTemplate) return;
@@ -575,6 +762,10 @@ function showGameNavScreen(themeName: string) {
     document.body.appendChild(gameNavScreen);
 }
 
+/**
+ * Gets the winning player class.
+ * @returns The winning player class
+ */
 function getWinningPlayerClass(): 'orange' | 'blue' | 'tie' {
     if (playerScores.blue > playerScores.orange) return 'blue';
     if (playerScores.orange > playerScores.blue) return 'orange';
@@ -582,12 +773,22 @@ function getWinningPlayerClass(): 'orange' | 'blue' | 'tie' {
     return activePlayerColor;
 }
 
+/**
+ * Creates the card front face.
+ * @returns The card front face
+ */
 function createCardFrontFace(): HTMLSpanElement {
     const cardFront = document.createElement('span');
     cardFront.className = 'game__card-face game__card-face--front';
     return cardFront;
 }
 
+/**
+ * Creates the card back face.
+ * @param cardIndex The card index
+ * @param cardImagePath The card image path
+ * @returns The card back face
+ */
 function createCardBackFace(cardIndex: number, cardImagePath: string): HTMLSpanElement {
     const cardBack = document.createElement('span');
     cardBack.className = 'game__card-face game__card-face--back';
@@ -599,6 +800,11 @@ function createCardBackFace(cardIndex: number, cardImagePath: string): HTMLSpanE
     return cardBack;
 }
 
+/**
+ * Shuffles an array.
+ * @param items The items
+ * @returns The shuffled items
+ */
 function shuffleArray<T>(items: T[]): T[] {
     const shuffledItems = [...items];
     for (let index = shuffledItems.length - 1; index > 0; index--) {
