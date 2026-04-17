@@ -19,17 +19,17 @@ type GridSize = {
     cols: number;
 };
 
-type PlayerColor = 'orange' | 'blue';
+type PlayerColor = 'orange' | 'blue' | 'tie';
 
 const themeImageMap: Record<string, string> = {
-    CodeVibesTheme: '../public/assets/img/codeVibes.png',
-    GamingTheme: '../public/assets/img/gaming.png',
-    DaProjectsTheme: '../public/assets/img/daProjects.png',
+    CodeVibesTheme: 'assets/img/codeVibes.png',
+    GamingTheme: 'assets/img/gaming.png',
+    DaProjectsTheme: 'assets/img/daProjects.png',
 };
 
 const dividerIconPaths = {
-    default: '../public/assets/icons/dividingLine.svg',
-    active: '../public/assets/icons/decorLineRotated.svg',
+    default: 'assets/icons/dividingLine.svg',
+    active: 'assets/icons/decorLineRotated.svg',
 };
 
 const boardSizeGridMap: Record<string, GridSize> = {
@@ -62,64 +62,64 @@ const themeExitOverrideMap: Record<string, ExitConfirmOverride> = {
 
 const themeCardImageMap: Record<string, string[]> = {
     CodeVibesTheme: [
-        '../public/assets/img/codeVibes/angular.png',
-        '../public/assets/img/codeVibes/bootstrap.png',
-        '../public/assets/img/codeVibes/css.png',
-        '../public/assets/img/codeVibes/django.png',
-        '../public/assets/img/codeVibes/firebase.png',
-        '../public/assets/img/codeVibes/git.png',
-        '../public/assets/img/codeVibes/github.png',
-        '../public/assets/img/codeVibes/html.png',
-        '../public/assets/img/codeVibes/javaScript.png',
-        '../public/assets/img/codeVibes/nodeJs.png',
-        '../public/assets/img/codeVibes/python.png',
-        '../public/assets/img/codeVibes/react.png',
-        '../public/assets/img/codeVibes/sass.png',
-        '../public/assets/img/codeVibes/sql.png',
-        '../public/assets/img/codeVibes/terminal.png',
-        '../public/assets/img/codeVibes/typeScript.png',
-        '../public/assets/img/codeVibes/vsCode.png',
-        '../public/assets/img/codeVibes/vueJs.png',
+        'assets/img/codeVibes/angular.png',
+        'assets/img/codeVibes/bootstrap.png',
+        'assets/img/codeVibes/css.png',
+        'assets/img/codeVibes/django.png',
+        'assets/img/codeVibes/firebase.png',
+        'assets/img/codeVibes/git.png',
+        'assets/img/codeVibes/github.png',
+        'assets/img/codeVibes/html.png',
+        'assets/img/codeVibes/javaScript.png',
+        'assets/img/codeVibes/nodeJs.png',
+        'assets/img/codeVibes/python.png',
+        'assets/img/codeVibes/react.png',
+        'assets/img/codeVibes/sass.png',
+        'assets/img/codeVibes/sql.png',
+        'assets/img/codeVibes/terminal.png',
+        'assets/img/codeVibes/typeScript.png',
+        'assets/img/codeVibes/vsCode.png',
+        'assets/img/codeVibes/vueJs.png',
     ],
     GamingTheme: [
-        '../public/assets/img/gaming/banana.png',
-        '../public/assets/img/gaming/circle.png',
-        '../public/assets/img/gaming/coin.png',
-        '../public/assets/img/gaming/controller.png',
-        '../public/assets/img/gaming/creeper.png',
-        '../public/assets/img/gaming/diamond.png',
-        '../public/assets/img/gaming/dice.png',
-        '../public/assets/img/gaming/gameBoy.png',
-        '../public/assets/img/gaming/levelUp.png',
-        '../public/assets/img/gaming/maze.png',
-        '../public/assets/img/gaming/pacman.png',
-        '../public/assets/img/gaming/pacmanHunter.png',
-        '../public/assets/img/gaming/play.png',
-        '../public/assets/img/gaming/puzzle.png',
-        '../public/assets/img/gaming/snake.png',
-        '../public/assets/img/gaming/sqaure.png',
-        '../public/assets/img/gaming/toad.png',
-        '../public/assets/img/gaming/triangle.png',
+        'assets/img/gaming/banana.png',
+        'assets/img/gaming/circle.png',
+        'assets/img/gaming/coin.png',
+        'assets/img/gaming/controller.png',
+        'assets/img/gaming/creeper.png',
+        'assets/img/gaming/diamond.png',
+        'assets/img/gaming/dice.png',
+        'assets/img/gaming/gameBoy.png',
+        'assets/img/gaming/levelUp.png',
+        'assets/img/gaming/maze.png',
+        'assets/img/gaming/pacman.png',
+        'assets/img/gaming/pacmanHunter.png',
+        'assets/img/gaming/play.png',
+        'assets/img/gaming/puzzle.png',
+        'assets/img/gaming/snake.png',
+        'assets/img/gaming/sqaure.png',
+        'assets/img/gaming/toad.png',
+        'assets/img/gaming/triangle.png',
     ],
     DaProjectsTheme: [
-        '../public/assets/img/daProjects/basket.png',
-        '../public/assets/img/daProjects/chef.png',
-        '../public/assets/img/daProjects/coderr.png',
-        '../public/assets/img/daProjects/coins.png',
-        '../public/assets/img/daProjects/cuisine.png',
-        '../public/assets/img/daProjects/daBubble.png',
-        '../public/assets/img/daProjects/eggs.png',
-        '../public/assets/img/daProjects/elPolloLoco.png',
-        '../public/assets/img/daProjects/hotCup.png',
-        '../public/assets/img/daProjects/join.png',
-        '../public/assets/img/daProjects/kanMind.png',
-        '../public/assets/img/daProjects/memory.png',
-        '../public/assets/img/daProjects/noodles.png',
-        '../public/assets/img/daProjects/pokedex.png',
-        '../public/assets/img/daProjects/portfolio.png',
-        '../public/assets/img/daProjects/sakura.png',
-        '../public/assets/img/daProjects/sharkie.png',
-        '../public/assets/img/daProjects/videoFlix.png',
+        'assets/img/daProjects/basket.png',
+        'assets/img/daProjects/chef.png',
+        'assets/img/daProjects/coderr.png',
+        'assets/img/daProjects/coins.png',
+        'assets/img/daProjects/cuisine.png',
+        'assets/img/daProjects/daBubble.png',
+        'assets/img/daProjects/eggs.png',
+        'assets/img/daProjects/elPolloLoco.png',
+        'assets/img/daProjects/hotCup.png',
+        'assets/img/daProjects/join.png',
+        'assets/img/daProjects/kanMind.png',
+        'assets/img/daProjects/memory.png',
+        'assets/img/daProjects/noodles.png',
+        'assets/img/daProjects/pokedex.png',
+        'assets/img/daProjects/portfolio.png',
+        'assets/img/daProjects/sakura.png',
+        'assets/img/daProjects/sharkie.png',
+        'assets/img/daProjects/videoFlix.png',
     ],
 };
 
@@ -130,6 +130,7 @@ let activePlayerColor: PlayerColor = 'blue';
 let playerScores: Record<PlayerColor, number> = {
     orange: 0,
     blue: 0,
+    tie: 0,
 };
 let isGameFinished = false;
 
@@ -410,6 +411,7 @@ function initScoreBoard() {
     playerScores = {
         orange: 0,
         blue: 0,
+        tie: 0,
     };
     updateScoreBoard();
     updateCurrentPlayerDisplay();
@@ -489,6 +491,18 @@ function showGameOverScreen(themeName: string) {
     document.body.appendChild(gameOverScreen);
 }
 
+function setTitleEndScreen(gameNavScreen: HTMLElement) {
+    const titleElement = gameNavScreen.querySelector<HTMLElement>('.nav-screen--title');
+    if (!titleElement) return;
+    if (playerScores.blue === playerScores.orange) {
+        titleElement.textContent = 'TIE'
+    } else if (playerScores.blue > playerScores.orange) {
+        titleElement.textContent = 'BLUE PLAYER';
+    } else if (playerScores.orange > playerScores.blue) {
+        titleElement.textContent = 'ORANGE PLAYER';
+    }
+}
+
 function addScoreboardToGameOver(sourceScoreBoard: HTMLElement, summaryContainer: HTMLElement) {
     const finalScoreBoard = sourceScoreBoard.cloneNode(true) as HTMLElement;
     finalScoreBoard.classList.add('game-over-screen__game-score');
@@ -553,6 +567,7 @@ function showGameNavScreen(themeName: string) {
     const gameNavScreen = gameNavTemplate.content.firstElementChild?.cloneNode(true) as HTMLElement | null;
     if (!gameNavScreen) return;
     gameNavScreen.classList.add(`game-nav-screen--${themeName}`);
+    setTitleEndScreen(gameNavScreen);
     const panel = gameNavScreen.querySelector<HTMLElement>('.game-nav-screen__panel');
     if (panel) {
         panel.classList.add(getWinningPlayerClass());
@@ -560,9 +575,10 @@ function showGameNavScreen(themeName: string) {
     document.body.appendChild(gameNavScreen);
 }
 
-function getWinningPlayerClass(): 'orange' | 'blue' {
+function getWinningPlayerClass(): 'orange' | 'blue' | 'tie' {
     if (playerScores.blue > playerScores.orange) return 'blue';
     if (playerScores.orange > playerScores.blue) return 'orange';
+    if (playerScores.orange === playerScores.blue) return 'tie';
     return activePlayerColor;
 }
 

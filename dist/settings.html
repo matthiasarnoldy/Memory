@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
 
-    <link rel="prefetch" href="/pages/game.html">
+    <link rel="shortcut icon" href="assets/icons/favicon.png" type="image/x-icon">
+
+    <link rel="prefetch" href="./assets/game-B8kQFbjp.html">
+  <script type="module" crossorigin src="./assets/settings-CbJYMruG.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/main-CVYesn0p.js">
+  <link rel="stylesheet" crossorigin href="./assets/main-eJc_Nbrd.css">
 </head>
 <body class="settings">
     <header class="settings__header">
         <h1 class="headline">Settings</h1>
-        <img class="headline__decorLine" src="../public/assets/icons/decorLineLeft.svg" alt="">
+        <img class="headline__decorLine" src="./assets/icons/decorLineLeft.svg" alt="">
     </header>
     <main class="settings__main">
         <section class="options">
             <fieldset>
                 <legend>
                     <div class="fieldset__headline">
-                        <img src="../public/assets/icons/palette.svg" alt="">
+                        <img src="./assets/icons/palette.svg" alt="">
                         <span>Game themes</span>
                     </div>
                 </legend>
@@ -26,21 +31,21 @@
                         <input type="radio" name="themes" value="CodeVibesTheme" checked>
                         <div class="settings__choosing">
                             <span>Code vibes theme</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                     <label>
                         <input type="radio" name="themes" value="GamingTheme">
                         <div class="settings__choosing">
                             <span>Gaming theme</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                     <label>
                         <input type="radio" name="themes" value="DaProjectsTheme">
                         <div class="settings__choosing">
                             <span>DA Projects theme</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                 </section>
@@ -48,7 +53,7 @@
             <fieldset>
                 <legend>
                     <div class="fieldset__headline">
-                        <img src="../public/assets/icons/chessPawn.svg" alt="">
+                        <img src="./assets/icons/chessPawn.svg" alt="">
                         <span>Chose player</span>
                     </div>
                 </legend>
@@ -57,14 +62,14 @@
                         <input type="radio" name="cardCount" value="Blue">
                         <div class="settings__choosing">
                             <span>Blue</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                     <label>
                         <input type="radio" name="cardCount" value="Orange">
                         <div class="settings__choosing">
                             <span>Orange</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                 </section>
@@ -72,7 +77,7 @@
             <fieldset>
                 <legend>
                     <div class="fieldset__headline">
-                        <img src="../public/assets/icons/style.svg" alt="">
+                        <img src="./assets/icons/style.svg" alt="">
                         <span>Board size</span>
                     </div>
                 </legend>
@@ -81,46 +86,45 @@
                         <input type="radio" name="players" value="16">
                         <div class="settings__choosing">
                             <span>16 cards</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                     <label>
                         <input type="radio" name="players" value="24">
                         <div class="settings__choosing">
                             <span>24 cards</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                     <label>
                         <input type="radio" name="players" value="36">
                         <div class="settings__choosing">
                             <span>36 cards</span>
-                            <img src="../public/assets/icons/decorLineRight.svg" alt="">
+                            <img src="./assets/icons/decorLineRight.svg" alt="">
                         </div>
                     </label>
                 </section>
             </fieldset>
         </section>
         <section class="options__choosed">
-            <img src="../public/assets/img/codeVibes.png" alt="">
+            <img src="./assets/img/codeVibes.png" alt="">
             <div class="settings__choosed">
                 <div class="settings__choosed--wrapper">
                     <span class="settings__selected-theme">Game theme</span>
-                    <img src="../public/assets/icons/dividingLine.svg" alt="">
+                    <img src="./assets/icons/dividingLine.svg" alt="">
                 </div>
                 <div class="settings__choosed--wrapper">
                     <span class="settings__selected-player">Player</span>
-                    <img src="../public/assets/icons/dividingLine.svg" alt="">
+                    <img src="./assets/icons/dividingLine.svg" alt="">
                 </div>
                 <span class="settings__selected-board-size">Board size</span>
                 <a href="./game.html" class="button button--small is-disabled">
-                    <img class="button__icon" src="../public/assets/icons/play.svg" alt="">
+                    <img class="button__icon" src="./assets/icons/play.svg" alt="">
                     <span data-label="Play">Play</span>
                 </a>
             </div>
         </section>
     </main>
 
-    <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

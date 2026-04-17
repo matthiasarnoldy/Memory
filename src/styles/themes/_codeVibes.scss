@@ -275,8 +275,19 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
             .nav-screen--title {
                 color: #2BB1FF;
             }
+
             .nav-screen__winner-graphic {
                 background-image: url("/assets/img/chessPawnBlue.png");
+            }
+        }
+
+        &.tie {
+            .nav-screen--title {
+                color: #ffffff;
+            }
+
+            .nav-screen__winner-graphic {
+                background-image: url("/assets/img/pockal.png");
             }
         }
     }

@@ -167,6 +167,16 @@
         background: center / contain no-repeat;
         flex: 0 0 auto;
     }
+
+    &.tie {
+        .nav-screen--title {
+            color: #ffffff;
+        }
+
+        .nav-screen__winner-graphic {
+            background-image: url("/assets/img/pockal.png");
+        }
+    }
 }
 
 .exit-confirm {
