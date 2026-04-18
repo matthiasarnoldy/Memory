@@ -15,6 +15,10 @@
     scroll-behavior: smooth;
 }
 
+html {
+    @include m.flex($direction: column, $justify: flex-start);
+}
+
 body {
     font-family: "Almarai", Arial, Helvetica, sans-serif;
     font-size: 16px;

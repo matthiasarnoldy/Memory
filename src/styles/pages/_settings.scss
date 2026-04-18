@@ -1,6 +1,7 @@
 @use "../abstract/mixins" as m;
 
 .settings {
+    max-width: 1440px;
     padding: clamp(16px, 8.75vw + -12px, 114px) clamp(16px, 13.75vw + -28px, 170px);
     @include m.flex($justify: flex-start, $align: flex-start, $direction: column, $gap: 48px)
 }
@@ -33,7 +34,7 @@
     @include m.flex($justify: space-between, $align: auto);
 
     @include m.breakpoint(1080px) {
-        @include m.flex($justify: center, $align: auto, $direction: column, $gap: 48px);
+        @include m.flex($justify: center, $align: auto, $direction: column-reverse, $gap: 48px);
     }
 
     .options {

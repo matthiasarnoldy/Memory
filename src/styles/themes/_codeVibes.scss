@@ -160,6 +160,16 @@ body.theme--codevibes *::-webkit-scrollbar-thumb {
     .game__card {
         width: 120px;
         height: 120px;
+
+        @include m.breakpoint(1080px) {
+            width: 100px;
+            height: 100px;
+        }
+
+        @include m.breakpoint(600px) {
+            width: 60px;
+            height: 60px;
+        }
     }
 
     .game-over-screen {

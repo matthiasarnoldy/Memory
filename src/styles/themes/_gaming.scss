@@ -83,6 +83,7 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
 
         svg.current__player--active {
             display: block;
+            flex-shrink: 0;
         }
     }
 
@@ -133,6 +134,16 @@ body.theme--gaming *::-webkit-scrollbar-thumb {
     .game__card {
         width: 105px;
         height: 120px;
+
+        @include m.breakpoint(1080px) {
+            width: 80px;
+            height: 100px;
+        }
+
+        @include m.breakpoint(600px) {
+            width: 60px;
+            height: 80px;
+        }
     }
 
     .game-over-screen {

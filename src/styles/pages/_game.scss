@@ -2,8 +2,17 @@
 @use "../abstract/variables" as v;
 
 .game {
+    max-width: 1440px;
     padding: 40px 110px;
     @include m.flex($justify: flex-start, $direction: column, $gap: 54px);
+
+    @include m.breakpoint(1080px) {
+        padding: 40px;
+    }
+
+    @include m.breakpoint(600px) {
+        padding: 16px;
+    }
 }
 
 .game__header {
@@ -11,6 +20,11 @@
     padding: 24px;
     background-color: gray;
     @include m.flex($justify: space-between);
+
+    @include m.breakpoint(1080px) {
+        width: auto;
+        @include m.flex($justify:center, $wrap: wrap, $gap: 24px);
+    }
 
     .game__score {
         padding: 16px;
@@ -42,6 +56,10 @@
     display: grid;
     grid-template-columns: repeat(var(--game-grid-cols, 4), minmax(0, 1fr));
     gap: var(--game-grid-gap, 16px);
+
+    @include m.breakpoint(420) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
 
 .game__card {
@@ -86,6 +104,11 @@
         object-fit: contain;
         user-select: none;
         pointer-events: none;
+
+        @include m.breakpoint(600px) {
+            width: 80%;
+            height: 80%;
+        }
     }
 }
 
