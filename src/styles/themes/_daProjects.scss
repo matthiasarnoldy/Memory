@@ -142,8 +142,8 @@ body.theme--da-projects *::-webkit-scrollbar-thumb {
             height: 80px;
         }
 
-        @include m.breakpoint(600px) {
-            width: 80px;
+        @include m.breakpoint(720px) {
+            width: 60px;
             height: 60px;
         }
     }
