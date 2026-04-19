@@ -1,6 +1,7 @@
 import './styles/style.scss'
 import type { SettingsValues, CompleteSettingsValues, GridSize, PlayerColor, ExitConfirmOverride } from './types';
 import { THEME_IMAGE_MAP, DIVIDER_ICON_PATHS, BOARD_SIZE_GRID_MAP, BOARD_SIZE_GAP_MAP, THEME_CLASS_MAP, THEME_EXIT_OVERRIDE_MAP, THEME_CARD_IMAGE_MAP } from './constants';
+import { initSettingsPage } from './settingsPage';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -35,8 +36,6 @@ function initGamePage() {
     renderGameBoard(savedSettings.boardSize, savedSettings.theme);
     initExitButton();
 }
-
-import { initSettingsPage } from './settingsPage';
 
 /**
  * Adds a click event to the Home button in the game.html to switch to the settings page without reloading.
@@ -332,8 +331,6 @@ import {
     showGameNavScreen,
     getWinningPlayerClass
 } from './gameOverlay';
-// Re-Export für gameOverlay.ts
-
 
 /**
  * Creates the card front face.
